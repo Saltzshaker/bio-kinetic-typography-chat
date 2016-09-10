@@ -1,3 +1,7 @@
+# Physiological Kinetic Typography Chat
+
+This is an instant messenger which currently just operates between multiple browsers, pointing to localhost:3000, on one computer. After setting a username, by clicking on the '+' tab on the left hand sign you will be able to see your messages animated based on your physiological state. If you go back into the message history, you can click on any of the messages to see it animated again based on your physiological state at that point in time. Whenever a user sends a message, it is animated and overrides whatever animated message is currently playing. Messages are assigned a numerical ID and they are assigned an animation which is stored in an array based on their ID number. The assigned animation is determined by the most dominant relative band power at that current moment, but if the user's heart rate and skin conductance are above average levels then the assigned animation will be the 'stress' animation.
+
 # Instructions for Testing:
 
 1. cd bio-kinetic-typography-chat
@@ -5,7 +9,7 @@
 3. Go to http://localhost:3000 in a browser
 4. Open another browser with the same url to communicate between the two browsers
 
-# Instructions for Running with Muse and Empatica E4
+# Instructions for Running with Muse and Empatica E4:
 
 1. In index.js, uncomment the code to send Muse data and comment out the setInterval function. In the text folder, delete all the data in ibiData.txt and gsrData.txt and leave them blank.
 2. Do the above instructions 
