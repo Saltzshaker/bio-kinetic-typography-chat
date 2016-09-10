@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animation-style.css">
+	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+  </head>
+  
+  <body>
+
+  	<section id="l" class="login-page">
+
+        <h1>What's your username?</h1>
+		<div class="login-info">
+        	<input id="usernameInput" type="text" maxlength="14" autocomplete="off" />
+			<button name="submit" onclick="setUsername()">SUBMIT</button>
+		</div>
+
+  	</section>
+  
+  	<section id="c" class="container">
+
+		<ul class="tab">  
+  			<li class="kinetic-page"><a href="#" class="tablinks"
+  			onclick="updateTab(event, 'kp')">
+  			
+  			<label id="k-tab">+</label></a>
+  			</li>
+  		</ul>
+  	
+		<div id="kp" class="kineticpage">
+  			<div class="text-animations">
+  				<!-- animations that take up minimal space -->
+  				<div class="static-animations">
+  					<div id="beta" style="display: none">
+  						<div id="animate-beta" class="t thinking"></div>
+  					</div>
+  					<div id="delta" style="display: none">
+  						<p id="animate-delta" class="sleepy"></p>
+  					</div>	
+  					<div id="hrv-eda" style="display: none">
+  						<p id="animate-stress" class="stress"></p>
+  					</div>
+  				</div>
+  				<div class="mid-animations">
+  					<div id="gamma" style="display: none">
+  						<div id="animate-gamma" class="i inspired"></div>
+  					</div>
+  				</div>
+  				<!-- animations that take up more vertical space -->
+  				<div class="up-animations">
+  				
+  					<div id="alpha" style="display: none">
+  						<p id="animate-alpha" class="content"></p>
+  					</div>
+  					
+  					<div id="theta" style="display: none">
+  						<div class="daydreaming">
+  						<p id="animate-theta" class="drift"></p>
+  						</div>
+  					</div>
+  				</div>			
+  			</div>
+			<div id="data">
+				<div id="chartContainer" style="height:200px; width:70%;"></div>
+				<div id="data-inner">
+					<img id="guy" src="img/base.png" alt="person" style="height:120px; border: 1px solid gray;">
+					<!--NEED TO IMPLEMENT SHARING CHECKBOX FUNCTION-->
+					<!-- 
+<div id="sharing">
+                		<label class="control control~~checkbox">Sharing
+						<input id="share-data" type="checkbox" checked="checked"/>
+						<div class="control__indicator"></div>
+						</label>
+                	</div>
+ -->
+                	<button id="connect" name="connect" onclick="connectToMuse()">Connect to Muse</button>
+                </div>            
+			</div>	
+		</div>
+
+		<div class="chatpage">
+  			<div class="messageContainer">
+				<ul id="messages"></ul>
+			</div>
+			<form action="">
+      			<input id="m" autocomplete="off" /><button>SEND</button>
+    		</form>
+  		</div>
+
+ 	</section>
+
+	<script src="js/bargraph.js"></script>
+	<script src="js/main.js"></script>
+	<script type="text/javascript" src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+  </body>
+
+</html>

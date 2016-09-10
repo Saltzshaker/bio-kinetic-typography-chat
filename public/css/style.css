@@ -1,0 +1,308 @@
+* { 
+	margin: 0; 
+	padding: 0; 
+	box-sizing: border-box; 
+}
+
+html,section{
+	height: 100%;
+}
+
+body { 
+	height: 100%;
+  	font-family: Geneva, Tahoma, Verdana, sans-serif;
+  	font-size: .9rem;
+  	line-height: 150%;
+}
+
+/* login section */
+.login-page {
+	display: block;
+	margin: 0 auto;
+    margin-top: 200px;
+    margin-left: 2s00px;
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+}
+
+.login-info {
+	padding: 30px;
+}
+
+.login-info input { 
+	border: 2px solid gray;
+    border-radius: 5px;
+	padding: 10px; 
+	width: 25%; 
+	margin-right: .5%; 
+}
+
+.login-info button { 
+	width: 9%; 
+	background: #2aa1c0; 
+	border: none; 
+	border-radius: 5px;
+	padding: 10px; 
+	font-size: 12px;
+	font-weight: bold;
+	font-family: Geneva, Tahoma, Verdana, sans-serif;
+	color: white;
+}
+
+.login-info button:hover {background-color: #0e647d;}
+
+.login-info button:focus, .active {background-color: #2aa1c0;}
+
+/* main section */
+.container {
+	display: none;
+}
+
+ul.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #afc5ca;
+    width: 45px;
+}
+
+ul.tab li {
+	float: left;
+	width: 45px;
+	background-color: #2aa1c0;
+	border-top-right-radius: 1em;
+	border-bottom-right-radius: 1em;
+}
+
+ul.tab li a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+ul.tab li a:hover {
+	background-color: #0e647d;
+	border-top-right-radius: 1em;
+	border-bottom-right-radius: 1em;
+	width: 45px;
+}
+
+ul.tab li a:focus, .active {
+	background-color: #2aa1c0;
+	border-top-right-radius: 1em;
+	border-bottom-right-radius: 1em;
+	width: 45px;
+}
+
+/* chat display area */
+.chatpage {
+  background-color: #f0f0f0;
+  -webkit-flex: 1;
+  position:relative;
+}
+
+#messages { 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0;
+	position:absolute; 
+	width:100%;
+	bottom:0px;
+	overflow-y: auto;
+	max-height: 100%;
+	margin-bottom: 60px;
+}
+
+#messages li { 
+	padding: 10px 20px 10px 20px;
+	text-align: left;
+}
+
+#messages li:hover{ 
+	background: #d9d9d9;
+}
+
+form { 
+	background: #f0f0f0;
+	padding: 10px;
+	bottom: 0;
+	height: 10%;
+	border-top: 1px solid #ccc;
+	position: absolute;
+	width: 100%;
+}
+
+form input { 
+	border: 2px solid gray;
+    border-radius: 5px;
+	padding: 10px; 
+	width: 90%; 
+	margin-right: .5%; 
+}
+
+form button { 
+	width: 9%; 
+	background: #2aa1c0; 
+	border: none; 
+	border-radius: 5px;
+	padding: 10px; 
+	font-size: 12px;
+	font-weight: bold;
+	font-family: 'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	color: white;
+}
+
+form button:hover {background-color: #0e647d;}
+
+form button:focus, .active {background-color: #2aa1c0;}
+
+/* kinetic typography display area */
+.kineticpage {
+    display: none;
+    color: black;
+    background-color: #afc5ca;
+  	-webkit-flex: 1;
+  	padding: 3rem;
+  	
+  	-webkit-flex-direction: column;
+  	-webkit-justify-content: center;
+}
+
+.text-animations {
+	border: 1px solid gray;
+	background-color: white;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	height: 200px;
+	width: 100%;
+	word-wrap: break-word;
+	overflow-y: scroll;
+	line-height: 250%;
+}
+
+.static-animations {
+	margin: 20px 20px 0 20px;
+}
+
+.mid-animations {
+	margin: 50px 20px 0 20px;
+}
+
+.up-animations {
+	clear: both;
+	margin: 100px 20px 0 20px;
+}
+
+/* expressive biofeedback */
+#data {
+	display: -webkit-flex;
+	-webkit-flex-direction: row;	
+}
+
+#chartContainer {
+	margin-bottom: 10%;
+	border: 1px solid gray;
+}
+
+#data-inner {
+	display: -webkit-flex;
+	-webkit-flex-direction: column;
+	margin-left: 20px;
+}
+
+#sharing {
+	display: -webkit-flex;
+	-webkit-flex-direction: row;
+	margin-top: 20px;
+	background: white;
+	border-radius: 5px;
+	padding: 10px; 
+	color: #0e647d;
+	word-wrap: break-word;
+}
+
+#share-data {
+	margin-right: 10px;
+	
+}
+
+/* connect to Muse button */
+#connect {
+	margin-top: 20px;
+	border: none; 
+	border-radius: 5px;
+	padding: 10px;
+	color: #0e647d;
+	background: white;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+/* sharing checkbox */
+
+/* 
+.control {
+	font-size: 18px;
+	position: relative;
+	display: block;
+	
+	padding-left: 30px;
+	cursor: pointer;
+}
+
+.control input {
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+}
+
+.control__indicator {
+	position: absolute;
+	top: 2px;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background: #e6e6e6;
+}
+
+.control:hover input ~ .control__indicator,
+.control input:focus ~ .control__indicator {
+	background: #ccc;
+}
+
+.control input:checked ~ .control__indicator {
+	background: #2aa1c0;
+}
+
+.control:hover input:not([disabled]):checked ~ .control__indicator,
+.control input:checked:focus ~ .control__indicator {
+	background: #0e647d;
+}
+
+.control__indicator:after {
+	position: absolute;
+	display: none;
+	content: '';
+}
+
+.control input:checked ~ .control__indicator:after {
+	display: block;
+}
+
+.control--checkbox .control__indicator:after {
+	top: 4px;
+	left: 8px;
+	width: 3px;
+	height: 8px;
+	transform: rotate(45deg);
+	border: solid #fff;
+	border-width: 0 2px 2px 0;
+} 
+ */

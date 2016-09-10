@@ -1,0 +1,253 @@
+/* alpha waves animation */
+.content {
+  -webkit-animation: bounce 0.4s infinite alternate;
+  font-size: 2em;
+  font-family: Tahoma, Geneva, sans-serif;
+ }
+
+@-webkit-keyframes bounce {
+   0% {
+    -webkit-transform: translateY(-80px); 
+     letter-spacing: -0.012em;
+   } 
+}
+
+/* beta waves animation */
+.t{
+ display: inline-block;
+}
+
+.thinking span{
+	display: inline-block;
+  	-webkit-animation-name: none;
+  	font-size: 2em;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+
+@keyframes swing {
+  
+  0% {transform: rotate3d(0, 0, 1, 15deg);}
+  50% {transform: rotate3d(0, 0, 1, 0deg);}
+  to {transform: rotate3d(0, 0, 1, 15deg);}
+
+}
+
+.thinking span:nth-child(2) {
+	-webkit-transform-origin: top center;
+  	-webkit-animation-name: swing;
+  	-webkit-animation-duration: 0.5s;
+    -webkit-animation-iteration-count: infinite; 
+}
+
+/* gamma waves animation */
+.i {
+	display: inline-block;
+}
+
+.inspired span{
+	display: inline-block;
+	-webkit-animation-name: bounceInUp;
+	-webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 3s;
+    font-size: 2em;
+	font-family: Tahoma, Geneva, sans-serif;
+	opacity: 0;
+	-webkit-animation-fill-mode: forwards;
+}
+
+@keyframes bounceInUp {
+  from, 60%, 75%, 90%, to {animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);}
+
+  from {
+    transform: translate3d(0, 500px, 0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -40px, 0);
+  }
+
+  75% {opacity: 1; transform: translate3d(0, 10px, 0);}
+
+  90% {opacity: 1; transform: translate3d(0, -5px, 0);}
+
+  to {opacity: 1; transform: translate3d(0, 0, 0);}
+}
+
+/* animate each letter of the first word of the message -- IMPROVE THIS */
+.inspired span:nth-child(27n+1) {
+	animation-delay: 0.25s;
+}
+
+.inspired span:nth-child(27n+2) {
+	animation-delay: 0.5s;
+}
+
+.inspired span:nth-child(27n+3) {
+	animation-delay: 0.75s;
+}
+
+.inspired span:nth-child(27n+4) {
+	animation-delay: 1s;
+}
+
+.inspired span:nth-child(27n+5) {
+	animation-delay: 1.25s;
+}
+
+.inspired span:nth-child(27n+6) {
+	animation-delay: 1.5s;
+}
+
+.inspired span:nth-child(27n+7) {
+	animation-delay: 1.75s;
+}
+
+.inspired span:nth-child(27n+8) {
+	animation-delay: 2s;
+}
+
+.inspired span:nth-child(27n+9) {
+	animation-delay: 2.25s;
+}
+
+.inspired span:nth-child(27n+10) {
+	animation-delay: 2.5s;
+}
+
+.inspired span:nth-child(27n+11) {
+	animation-delay: 2.75s;
+}
+
+.inspired span:nth-child(27n+12) {
+	animation-delay: 3s;
+}
+
+.inspired span:nth-child(27n+13) {
+	animation-delay: 3.25s;
+}
+
+.inspired span:nth-child(27n+14) {
+	animation-delay: 3.5s;
+}
+
+.inspired span:nth-child(27n+15) {
+	animation-delay: 3.75s;
+}
+
+.inspired span:nth-child(27n+16) {
+	animation-delay: 4s;
+}
+
+.inspired span:nth-child(27n+17) {
+	animation-delay: 4.25s;
+}
+
+.inspired span:nth-child(27n+18) {
+	animation-delay: 4.5s;
+}
+.inspired span:nth-child(27n+19) {
+	animation-delay: 4.75s;
+}
+.inspired span:nth-child(27n+20) {
+	animation-delay: 5s;
+}
+.inspired span:nth-child(27n+21) {
+	animation-delay: 5.25s;
+}
+.inspired span:nth-child(27n+22) {
+	animation-delay: 5.5s;
+}
+.inspired span:nth-child(27n+23) {
+	animation-delay: 5.75s;
+}
+.inspired span:nth-child(27n+24) {
+	animation-delay: 6s;
+}
+.inspired span:nth-child(27n+25) {
+	animation-delay: 6.25s;
+}
+.inspired span:nth-child(27n+26) {
+	animation-delay: 6.5s;
+}
+.inspired span:nth-child(27n+27) {
+	animation-delay: 6.75s;
+}
+
+/* delta waves animation */
+.sleepy {
+	-webkit-animation-name: flop;
+	-webkit-animation-duration: 4s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-perspective: 500; 
+	-webkit-transform-style: preserve-3d;
+	-webkit-transition-property: transform; 
+	-webkit-transition-duration: 0.5s;
+	-webkit-transform: translateZ(30px) rotateX(90deg);
+	font-size: 2em;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+
+@-webkit-keyframes flop {
+	0% {
+		-webkit-transform: rotateY(0deg);
+		-webkit-perspective: 5000;
+	}
+}
+
+/* theta waves animation */
+.daydreaming {
+	display: inline-block;
+    -webkit-animation-name: floating;
+    -webkit-animation-duration: 10s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+.drift {
+	display: inline-block;
+    -webkit-animation-name: rotating;
+    -webkit-animation-duration: 20s;
+    -webkit-animation-iteration-count: infinite;
+	font-size: 5em;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+
+@-webkit-keyframes rotating {
+    
+     0% {-webkit-transform: rotate(0deg);}
+    
+    20% {-webkit-transform: rotate(-20deg);}
+    60% {-webkit-transform: rotate(5deg);}
+    
+    80% {-webkit-transform: rotate(10deg);}
+    100% {-webkit-transform: rotate(0deg);}
+
+}
+
+@-webkit-keyframes floating {
+    from {-webkit-transform:translate(0, 0px);}
+
+    50% {-webkit-transform:translate(-15px, 25px);}
+
+	75% {-webkit-transform:translate(15px, -45px);}
+
+    to {-webkit-transform: translate(0, 0px);} 
+   
+}
+
+/* high heart rate and electrodermal activity animation */
+.stress {
+    -webkit-animation-name: shake;
+    -webkit-animation-duration: 0.8s;
+    -webkit-animation-iteration-count: infinite; 
+    -webkit-animation-fill-mode: both;
+    font-size: 2em;
+	font-family: Tahoma, Geneva, sans-serif;
+}
+ 
+@-webkit-keyframes shake {
+    from, to {-webkit-transform: translate3d(0, 0, 0);} 
+    10%, 30%, 50%, 70%, 90% {-webkit-transform: translate3d(-10px, 0, 0);} 
+    20%, 40%, 60%, 80% {-webkit-transform: translate3d(10px, 0, 0);} 
+}
