@@ -19,8 +19,8 @@ $(function() {
 		$('#m').val('');
     	return false;
 	});
-	
-	//IMPLEMENT option to share your animation with chat users	
+
+	//IMPLEMENT option to share your animation with chat users
 // 	$('#share-data').change(function() {
 //         if($(this).is(":checked")){
 //     		//share with both users
@@ -30,7 +30,7 @@ $(function() {
 //     		share = "n";
 //     	}
 // 	});
-	
+
 	socket.on('chat message', function(msg){
 		var myMessage = $('#messages');
 		myMessage.append($('<li>').attr("id", a).attr("class", share).data("sharing", share).text(msg));
@@ -44,8 +44,8 @@ $(function() {
 		animationArray[a] = inf;
 		animateText(removeName(msg));
 		a++;
-	});	
-		
+	});
+
 	$("button[name='submit']").click(setUsername);
 	$("button[name='connect']").click(connectToMuse);
 
@@ -53,33 +53,33 @@ $(function() {
 	function setUsername() {
 
   		var name = document.getElementById('usernameInput').value;
-  		socket.emit('add user', name);		
+  		socket.emit('add user', name);
 		document.getElementById("l").style.display = "none";
-		document.getElementById("c").style.display = "-webkit-flex";	
-	
+		document.getElementById("c").style.display = "-webkit-flex";
+
     	startSending();
 	}
 
 	//change band power values to floats in order to be graphed
-	function addDelta(data) {
-		delta_float = parseFloat(data);
-	}
-
-	function addTheta(data) {
-		theta_float = parseFloat(data);
-	}
+	// function addDelta(data) {
+	// 	delta_float = parseFloat(data);
+	// }
+	//
+	// function addTheta(data) {
+	// 	theta_float = parseFloat(data);
+	// }
 
 	function addAlpha(data) {
 		alpha_float = parseFloat(data);
 	}
-
-	function addBeta(data) {
-		beta_float = parseFloat(data);
-	}
-
-	function addGamma(data) {
-		gamma_float = parseFloat(data);
-	}
+	//
+	// function addBeta(data) {
+	// 	beta_float = parseFloat(data);
+	// }
+	//
+	// function addGamma(data) {
+	// 	gamma_float = parseFloat(data);
+	// }
 
 	//get the highest relative band power
 	function getMax() {
@@ -108,7 +108,7 @@ $(function() {
     	socket.on('muse_connected', function() {
     		console.log("Connected to Muse!");
         	startSending();
-    	});  
+    	});
     	startSending();
     	document.getElementById("guy").src = "img/eda1-hrv1.png";
     	connectToE4();
@@ -124,7 +124,8 @@ $(function() {
 	function connectToE4() {
 		var gsr_index = 0;
 		var hrv_index = 0;
-	
+
+
     	setInterval(function(){
     		$.get("text/ibiData.txt", function(data) {
       			ibiarr = data.split(",");
@@ -132,15 +133,16 @@ $(function() {
             	hrv = 60 / ibiarr[e4_index];
             	hrv_index++;
         	});
-        
+
     		$.get("text/gsrData.txt", function(data) {
       			gsrarr = data.split(",");
     		}).done(function() {
-            	eda = gsrarr[e4_index];
+            	eda = gsrarr[gsr_index];
             	gsr_index++;
-        	});  
-        
-        	changeE4Image(eda, hrv);    
+							console.log(eda);
+        	});
+
+        	changeE4Image(eda, hrv);
     	}, 1000);
 
     	if(ibiarr[0] !== null && gsrarr[0] !== null){
@@ -201,26 +203,10 @@ $(function() {
 
 	//send muse data to be graphed
 	function startSending() {
-		socket.on('delta_relative', function(data) {
-        	addDelta(data);
-        	addDeltaGraph(data);
-        	console.log("send deltaa");
-    	});
-    	socket.on('theta_relative', function(data) {
-        	addTheta(data);
-        	addThetaGraph(data);
-    	});
+
     	socket.on('alpha_relative', function(data) {
         	addAlpha(data);
         	addAlphaGraph(data);
-    	});
-    	socket.on('beta_relative', function(data) {
-        	addBeta(data);
-        	addBetaGraph(data);
-    	});
-    	socket.on('gamma_relative', function(data) {
-        	addGamma(data);
-        	addGammaGraph(data);
     	});
 	}
 
@@ -228,11 +214,11 @@ $(function() {
 	$(document.body).on('click','#messages li',function(evt){
 
 		// alert($(this).data("sharing"));
-		
+
 		var text = document.getElementById(this.id).innerText;
-	
+
 		if($(this).data("sharing") === "y") {
-		
+
 			if(animationArray[parseInt(this.id)] === "alpha"){
 				text = removeName(text);
 				animateAlpha(text);
@@ -240,24 +226,24 @@ $(function() {
 			else if(animationArray[parseInt(this.id)] === "beta"){
 				text = removeName(text);
 				animateBeta(text);
-			} 
+			}
 			else if(animationArray[parseInt(this.id)] === "delta"){
 				text = removeName(text);
 				animateDelta(text);
-			} 
+			}
 			else if(animationArray[parseInt(this.id)] === "gamma"){
 				text = removeName(text);
 				animateGamma(text);
-			} 
+			}
 			else if(animationArray[parseInt(this.id)] === "theta"){
 				text = removeName(text);
 				animateTheta(text);
-			} 
+			}
 			else if(animationArray[parseInt(this.id)] === "stress"){
 				text = removeName(text);
 				animateStress(text);
-			} 
-		}     
+			}
+		}
 	});
 
 	//remove the username from the chat message
@@ -298,7 +284,7 @@ $(function() {
 		clearAnimations();
 		$('#animate-beta').find('span').remove();
     	$('#beta').css('display', 'block');
-     	
+
     	var textArray = message.split("");
     	var prevLetters = "";
     	for (i=0; i < textArray.length-1; i++) {
@@ -319,11 +305,11 @@ $(function() {
 		$('#animate-gamma').find('span').remove();
 		$('#animate-gamma').find('p').remove();
     	$('#gamma').css('display', 'block');
-     	
+
     	var sentenceArray = message.split(" ");
 		var textArray = sentenceArray[1].split("");
 		var s = "";
-	
+
 		for (i=0; i < textArray.length; i++) {
 			if(textArray[i] === " "){
 				break;
@@ -374,9 +360,9 @@ function updateTab(evt, pageName) {
 }
 
 function openTab(evt, pageName) {
-    var i, tabcontent, tablinks;    
+    var i, tabcontent, tablinks;
     document.getElementById('k-tab').innerHTML = '-';
- 
+
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("kineticpage");
     for (i = 0; i < tabcontent.length; i++) {
@@ -398,12 +384,12 @@ function openTab(evt, pageName) {
 function closeTab(evt, pageName) {
 	var i, tabcontent, tablinks;
 	document.getElementById('k-tab').innerHTML = '+';
-	
+
     tabcontent = document.getElementsByClassName("kineticpage");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
-    
+
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");

@@ -11,50 +11,42 @@ http.listen(3000, function(){
 });
 
 io.on('connection', function(socket){
-  
+
   console.log('a user connected');
-  
+
   socket.on('chat message', function(msg){
-	
+
 	var data = socket.username + ": " + msg;
 	io.emit('chat message', data);
 
   });
- 
-  socket.on('add user', function(name){   
-  	socket.username = name;  
+
+  socket.on('add user', function(name){
+  	socket.username = name;
   });
- 
+
 	// IMPLEMENT Disconnect button for Muse
 //  socket.on('disconnect', function(){
 //     console.log('user disconnected');
 //   });
-  
+
   	//comment out setInterval when done testing
   	setInterval(function(){
-  	
+
   		//send fake Muse data to test chat
   		console.log("sending fake data");
-        var fakedelta = getRandom(0, 1);
-        var faketheta = getRandom(0, 1);
         var fakealpha = getRandom(0, 1);
-        var fakebeta = getRandom(0, 1);
-        var fakegamma = getRandom(0, 1);
-        socket.emit('delta_relative', fakedelta);
-        socket.emit('theta_relative', faketheta);
         socket.emit('alpha_relative', fakealpha);
-        socket.emit('beta_relative', fakebeta);
-        socket.emit('gamma_relative', fakegamma);
     }, 1000);
-        
+
 	function getRandom(min, max) {
     	return Math.random() * (max - min) + min;
 	}
-  
+
 //   socket.on('connectmuse', function() {
-//         
+//
 //   	var muse = nodeMuse.connect().Muse;
-//   	
+//
 //   	// only send once every second
 //     var deltanow = Date.now();
 //     var deltalast = Date.now();
@@ -66,23 +58,23 @@ io.on('connection', function(socket){
 //     var betalast = Date.now();
 //     var gammanow = Date.now();
 //     var gammalast = Date.now();
-//   
+//
 //   	muse.on('connected', function() {
 //             socket.emit('muse_connected');
 //             console.log("we connected");
 //     });
-// 
+//
 //     muse.on('uncertain', function(){
 //             // for some reason muse can't be detected
 //             // waiting for new signals to arrive
 //             socket.emit('muse_uncertain');
 //     });
-// 
+//
 //     muse.on('disconnected', function() {
 //             socket.emit('muse_unintended_disconnect');
 //     });
-//     
-//     
+//
+//
 // // get relative data from muse, these values will be between 0 and 1
 // // see: http://developer.choosemuse.com/research-tools/available-data#Relative_Band_Powers
 //         muse.on('/muse/elements/delta_relative', function(data){
@@ -94,7 +86,7 @@ io.on('connection', function(socket){
 //                 socket.emit('delta_relative', deltadata);
 //             }
 //         });
-// 
+//
 //         muse.on('/muse/elements/theta_relative', function(data){
 //             thetanow = Date.now();
 //             var thetadata = averageChannelData(data);
@@ -103,7 +95,7 @@ io.on('connection', function(socket){
 //                 socket.emit('theta_relative', averageChannelData(data));
 //             }
 //         });
-// 
+//
 //         muse.on('/muse/elements/alpha_relative', function(data){
 //             alphanow = Date.now();
 //             var alphadata = averageChannelData(data);
@@ -112,7 +104,7 @@ io.on('connection', function(socket){
 //                 socket.emit('alpha_relative', averageChannelData(data));
 //             }
 //         });
-// 
+//
 //         muse.on('/muse/elements/beta_relative', function(data){
 //             betanow = Date.now();
 //             var betadata = averageChannelData(data);
@@ -121,7 +113,7 @@ io.on('connection', function(socket){
 //                 socket.emit('beta_relative', averageChannelData(data));
 //             }
 //         });
-// 
+//
 //         muse.on('/muse/elements/gamma_relative', function(data){
 //             gammanow = Date.now();
 //             var gammadata = averageChannelData(data);
@@ -130,14 +122,14 @@ io.on('connection', function(socket){
 //                 socket.emit('gamma_relative', averageChannelData(data));
 //             }
 //         });
-//   
+//
 //   });
-//   
+//
 //   socket.on('disconnectmuse', function() {
 //         nodeMuse.disconnect();
 //         socket.emit('muse_disconnect');
 //   });
-//   
+//
 });
 
 function averageChannelData(data) {
@@ -178,5 +170,3 @@ function checkTime(currentTime, lastTime) {
     }
     return false;
 }
-
-
