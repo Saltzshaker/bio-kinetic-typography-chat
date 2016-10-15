@@ -8,11 +8,11 @@ $(function() {
 	var hrv = 0;
 	var eda = 0;
 	var delta_float;
-    var theta_float;
-    var alpha_float;
-    var beta_float;
-    var gamma_float;
-    var inf;
+  var theta_float;
+  var alpha_float;
+  var beta_float;
+  var gamma_float;
+  var inf;
 
 	$('form').submit(function(){
 		socket.emit('chat message', $('#m').val());
@@ -51,35 +51,12 @@ $(function() {
 
 	// Sets the client's username
 	function setUsername() {
-
-  		var name = document.getElementById('usernameInput').value;
-  		socket.emit('add user', name);
+		var name = document.getElementById('usernameInput').value;
+		socket.emit('add user', name);
 		document.getElementById("l").style.display = "none";
 		document.getElementById("c").style.display = "-webkit-flex";
-
-    	startSending();
+  	// startSending();
 	}
-
-	//change band power values to floats in order to be graphed
-	// function addDelta(data) {
-	// 	delta_float = parseFloat(data);
-	// }
-	//
-	// function addTheta(data) {
-	// 	theta_float = parseFloat(data);
-	// }
-
-	function addAlpha(data) {
-		alpha_float = parseFloat(data);
-	}
-	//
-	// function addBeta(data) {
-	// 	beta_float = parseFloat(data);
-	// }
-	//
-	// function addGamma(data) {
-	// 	gamma_float = parseFloat(data);
-	// }
 
 	//get the highest relative band power
 	function getMax() {
@@ -106,10 +83,10 @@ $(function() {
 	function connectToMuse() {
     	socket.emit('connectmuse');
     	socket.on('muse_connected', function() {
-    		console.log("Connected to Muse!");
-        	startSending();
+  		console.log("Connected to Muse!");
+    	// startSending();
     	});
-    	startSending();
+    	// startSending();
     	document.getElementById("guy").src = "img/eda1-hrv1.png";
     	connectToE4();
 	}
@@ -130,7 +107,7 @@ $(function() {
     		$.get("text/ibiData.txt", function(data) {
       			ibiarr = data.split(",");
     		}).done(function() {
-            	hrv = 60 / ibiarr[e4_index];
+            	hrv = 60 / ibiarr[hrv_index];
             	hrv_index++;
         	});
 
@@ -199,15 +176,6 @@ $(function() {
 		else if(conductance > 1 && heartRate >= 140){
 			document.getElementById("guy").src = "img/eda3-hrv3.png";
 		}
-	}
-
-	//send muse data to be graphed
-	function startSending() {
-
-    	socket.on('alpha_relative', function(data) {
-        	addAlpha(data);
-        	addAlphaGraph(data);
-    	});
 	}
 
 	//when posted chat messages are clicked on, their assigned animation is replayed
