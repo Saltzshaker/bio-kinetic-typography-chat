@@ -1,18 +1,32 @@
+// current EDA
+var e;
+var gsrarr;
+var gsr_index = 0;
+// Add a value from gsrData.txt to each line every second
+setInterval(function() {
+  $.get("text/gsrData.txt", function(data) {
+      gsrarr = data.split(",");
+  }).done(function() {
+    // get values from GSR array
+    e = gsrarr[gsr_index];
+    fakebase = gsrarr[gsr_index];
+    console.log("main: " + e);
+    gsr_index++;
+  }, 1000);
+});
+
 $(function() {
 	var animationArray = [];
 	var socket = io.connect();
-	var a = 0;
 	var share = "y";
 	var ibiarr = [];
 	var gsrarr = [];
 	var hrv = 0;
 	var eda = 0;
-	var delta_float;
-  var theta_float;
-  var alpha_float;
-  var beta_float;
-  var gamma_float;
   var inf;
+	var a = 0;
+
+
 
 	$('form').submit(function(){
 		socket.emit('chat message', $('#m').val());
@@ -35,11 +49,9 @@ $(function() {
 		var myMessage = $('#messages');
 		myMessage.append($('<li>').attr("id", a).attr("class", share).data("sharing", share).text(msg));
 		myMessage.scrollTop(myMessage.prop('scrollHeight'));
+
 		//determine the current highest relative band power
-		inf = getMax();
-		if(eda > 0.5 && hrv > 100){
-			inf = "stress";
-		}
+
 		//assign animation to the message
 		animationArray[a] = inf;
 		animateText(removeName(msg));
@@ -47,7 +59,6 @@ $(function() {
 	});
 
 	$("button[name='submit']").click(setUsername);
-	$("button[name='connect']").click(connectToMuse);
 
 	// Sets the client's username
 	function setUsername() {
@@ -56,126 +67,6 @@ $(function() {
 		document.getElementById("l").style.display = "none";
 		document.getElementById("c").style.display = "-webkit-flex";
   	// startSending();
-	}
-
-	//get the highest relative band power
-	function getMax() {
-		var influence;
-    	var max = Math.max(delta_float, theta_float, alpha_float, beta_float, gamma_float);
-    	if(delta_float == max){
-    		influence = "delta";
-    	}
-    	else if (theta_float == max){
-    		influence = "theta";
-    	}
-    	else if (alpha_float == max){
-    		influence = "alpha";
-    	}
-    	else if (beta_float == max){
-    		influence = "beta";
-    	}
-    	else if (gamma_float == max){
-    		influence = "gamma";
-    	}
-    	return influence;
-	}
-
-	function connectToMuse() {
-    	socket.emit('connectmuse');
-    	socket.on('muse_connected', function() {
-  		console.log("Connected to Muse!");
-    	// startSending();
-    	});
-    	// startSending();
-    	document.getElementById("guy").src = "img/eda1-hrv1.png";
-    	connectToE4();
-	}
-
-// function disconnectFromMuse() {
-//     socket.emit('disconnectmuse');
-//     socket.on('muse_disconnect', function() {
-//         console.log("muse is disconnected");
-//     });
-// }
-
-	function connectToE4() {
-		var gsr_index = 0;
-		var hrv_index = 0;
-
-
-    	setInterval(function(){
-    		$.get("text/ibiData.txt", function(data) {
-      			ibiarr = data.split(",");
-    		}).done(function() {
-            	hrv = 60 / ibiarr[hrv_index];
-            	hrv_index++;
-        	});
-
-    		$.get("text/gsrData.txt", function(data) {
-      			gsrarr = data.split(",");
-    		}).done(function() {
-            	eda = gsrarr[gsr_index];
-            	gsr_index++;
-							console.log(eda);
-        	});
-
-        	changeE4Image(eda, hrv);
-    	}, 1000);
-
-    	if(ibiarr[0] !== null && gsrarr[0] !== null){
-    		console.log("E4 Connected!");
-    	}
-	}
-
-	function changeE4Image(conductance, heartRate) {
-		if(conductance < 0.3 && heartRate <= 76){
-			document.getElementById("guy").src = "img/base.png";
-		}
-		else if(conductance < 0.3 && heartRate >= 76 && heartRate <= 100){
-			document.getElementById("guy").src = "img/eda0-hrv1.png";
-		}
-		else if(conductance < 0.3 && heartRate >= 100 && heartRate <= 140){
-			document.getElementById("guy").src = "img/eda0-hrv2.png";
-		}
-		else if(conductance < 0.3 && heartRate >= 140){
-			document.getElementById("guy").src = "img/eda0-hrv3.png";
-		}
-		else if(conductance > 0.3 && conductance < 0.5 && heartRate < 76){
-			document.getElementById("guy").src = "img/eda1-hrv0.png";
-		}
-		else if(conductance > 0.5 && conductance < 1 && heartRate < 76){
-			document.getElementById("guy").src = "img/eda2-hrv0.png";
-		}
-		else if(conductance > 1 && heartRate < 76){
-			document.getElementById("guy").src = "img/eda3-hrv0.png";
-		}
-		else if(conductance > 0.3 && conductance < 0.5 && heartRate >= 76 && heartRate <= 100){
-			document.getElementById("guy").src = "img/eda1-hrv1.png";
-		}
-		else if(conductance > 0.3 && conductance < 0.5 && heartRate >= 100 && heartRate <= 140){
-			document.getElementById("guy").src = "img/eda1-hrv2.png";
-		}
-		else if(conductance > 0.3 && conductance < 0.5 && heartRate >= 140){
-			document.getElementById("guy").src = "img/eda1-hrv3.png";
-		}
-		else if(conductance > 0.5 && conductance < 1 && heartRate >= 76 && heartRate <= 100){
-			document.getElementById("guy").src = "img/eda2-hrv1.png";
-		}
-		else if(conductance > 0.5 && conductance < 1 && heartRate >= 100 && heartRate <= 140){
-			document.getElementById("guy").src = "img/eda2-hrv2.png";
-		}
-		else if(conductance > 0.5 && conductance < 1 && heartRate >= 140){
-			document.getElementById("guy").src = "img/eda2-hrv3.png";
-		}
-		else if(conductance > 1 && heartRate >= 76 && heartRate <= 100){
-			document.getElementById("guy").src = "img/eda3-hrv1.png";
-		}
-		else if(conductance > 1 && heartRate >= 100 && heartRate <= 140){
-			document.getElementById("guy").src = "img/eda3-hrv2.png";
-		}
-		else if(conductance > 1 && heartRate >= 140){
-			document.getElementById("guy").src = "img/eda3-hrv3.png";
-		}
 	}
 
 	//when posted chat messages are clicked on, their assigned animation is replayed

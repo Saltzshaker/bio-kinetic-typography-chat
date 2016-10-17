@@ -205,7 +205,7 @@ form button:focus, .active {background-color: #2aa1c0;}
 	-webkit-flex-direction: row;
 }
 
-#chartContainer {
+#mycanvas {
 	margin-bottom: 10%;
 	border: 1px solid gray;
 	background-color: #eee;
