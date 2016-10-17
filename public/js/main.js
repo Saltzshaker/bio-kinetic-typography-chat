@@ -2,6 +2,7 @@
 var e;
 var gsrarr;
 var gsr_index = 0;
+
 // Add a value from gsrData.txt to each line every second
 setInterval(function() {
   $.get("text/gsrData.txt", function(data) {
@@ -10,11 +11,12 @@ setInterval(function() {
     // get values from GSR array
     e = gsrarr[gsr_index];
     fakebase = gsrarr[gsr_index];
-    console.log("main: " + e);
+    // console.log("main: " + e);
     gsr_index++;
   }, 1000);
 });
 
+// define empty animation array with animation object
 $(function() {
 	var animationArray = [];
 	var socket = io.connect();
@@ -26,8 +28,7 @@ $(function() {
   var inf;
 	var a = 0;
 
-
-
+// when form is submitted, add the message
 	$('form').submit(function(){
 		socket.emit('chat message', $('#m').val());
 		$('#m').val('');
@@ -52,8 +53,8 @@ $(function() {
 
 		//determine the current highest relative band power
 
-		//assign animation to the message
-		animationArray[a] = inf;
+		// assign animation to the message
+		animationArray[a] = "alpha";
 		animateText(removeName(msg));
 		a++;
 	});
@@ -76,33 +77,33 @@ $(function() {
 
 		var text = document.getElementById(this.id).innerText;
 
-		if($(this).data("sharing") === "y") {
-
-			if(animationArray[parseInt(this.id)] === "alpha"){
-				text = removeName(text);
+		// if($(this).data("sharing") === "y") {
+		//
+		// 	if(animationArray[parseInt(this.id)] === "alpha"){
+		// 		text = removeName(text);
 				animateAlpha(text);
-			}
-			else if(animationArray[parseInt(this.id)] === "beta"){
-				text = removeName(text);
-				animateBeta(text);
-			}
-			else if(animationArray[parseInt(this.id)] === "delta"){
-				text = removeName(text);
-				animateDelta(text);
-			}
-			else if(animationArray[parseInt(this.id)] === "gamma"){
-				text = removeName(text);
-				animateGamma(text);
-			}
-			else if(animationArray[parseInt(this.id)] === "theta"){
-				text = removeName(text);
-				animateTheta(text);
-			}
-			else if(animationArray[parseInt(this.id)] === "stress"){
-				text = removeName(text);
-				animateStress(text);
-			}
-		}
+			// }
+			// else if(animationArray[parseInt(this.id)] === "beta"){
+			// 	text = removeName(text);
+			// 	animateBeta(text);
+			// }
+			// else if(animationArray[parseInt(this.id)] === "delta"){
+			// 	text = removeName(text);
+			// 	animateDelta(text);
+			// }
+			// else if(animationArray[parseInt(this.id)] === "gamma"){
+			// 	text = removeName(text);
+			// 	animateGamma(text);
+			// }
+			// else if(animationArray[parseInt(this.id)] === "theta"){
+			// 	text = removeName(text);
+			// 	animateTheta(text);
+			// }
+			// else if(animationArray[parseInt(this.id)] === "stress"){
+			// 	text = removeName(text);
+			// 	animateStress(text);
+			// }
+		// }
 	});
 
 	//remove the username from the chat message

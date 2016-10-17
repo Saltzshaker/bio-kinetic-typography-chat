@@ -18,15 +18,10 @@ var line2 = new TimeSeries();
 //     // get values from GSR array
 //     e = gsrarr[gsr_index];
 //     fakebase = e - .02;
-//     // console.log("linegraph" + e);
 //     gsr_index++;
 //
 //     // line1.append(new Date().getTime(), e);
 //     // line2.append(new Date().getTime(), fakebase);
-//
-//     line1.append(new Date().getTime(), Math.random());
-//     line2.append(new Date().getTime(), Math.random());
-//
 //   }, 1000);
 // });
 
