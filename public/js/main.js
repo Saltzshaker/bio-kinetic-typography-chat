@@ -3,27 +3,12 @@ var e;
 var gsrarr;
 var gsr_index = 0;
 
-// Add a value from gsrData.txt to each line every second
-setInterval(function() {
-  $.get("text/gsrData.txt", function(data) {
-      gsrarr = data.split(",");
-  }).done(function() {
-    // get values from GSR array
-    e = gsrarr[gsr_index];
-    fakebase = gsrarr[gsr_index];
-    // console.log("main: " + e);
-    gsr_index++;
-  }, 1000);
-});
-
 // define empty animation array with animation object
 $(function() {
 	var animationArray = [];
 	var socket = io.connect();
 	var share = "y";
-	var ibiarr = [];
 	var gsrarr = [];
-	var hrv = 0;
 	var eda = 0;
   var inf;
 	var a = 0;
@@ -36,15 +21,15 @@ $(function() {
 	});
 
 	//IMPLEMENT option to share your animation with chat users
-// 	$('#share-data').change(function() {
-//         if($(this).is(":checked")){
-//     		//share with both users
-//     		share = "y";
-//     	}
-//     	else{
-//     		share = "n";
-//     	}
-// 	});
+	$('#share-data').change(function() {
+        if($(this).is(":checked")){
+    		//share with both users
+    		share = "y";
+    	}
+    	else{
+    		share = "n";
+    	}
+	});
 
 	socket.on('chat message', function(msg){
 		var myMessage = $('#messages');
@@ -52,6 +37,9 @@ $(function() {
 		myMessage.scrollTop(myMessage.prop('scrollHeight'));
 
 		//determine the current highest relative band power
+		if(e < 0.5){
+			inf = "stress";
+		}
 
 		// assign animation to the message
 		animationArray[a] = "alpha";
@@ -118,18 +106,6 @@ $(function() {
 		}
 		else if(animationArray[a] === "beta"){
 			animateBeta(message);
-		}
-		else if(animationArray[a] === "delta"){
-			animateDelta(message);
-		}
-		else if(animationArray[a] === "gamma"){
-			animateGamma(message);
-		}
-		else if(animationArray[a] === "theta"){
-			animateTheta(message);
-		}
-		else if(animationArray[a] === "stress"){
-			animateStress(message);
 		}
 	}
 
