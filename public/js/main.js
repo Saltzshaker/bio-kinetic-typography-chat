@@ -2,11 +2,11 @@
 var e;
 var gsrarr;
 var gsr_index = 0;
+var socket = io.connect();
 
 // define empty animation array with animation object
 $(function() {
 	var animationArray = [];
-	var socket = io.connect();
 	var share = "y";
 	var gsrarr = [];
 	var eda = 0;
