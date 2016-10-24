@@ -26,14 +26,14 @@
   	<section id="c" class="container">
 
 		<ul class="tab">
-  			<li class="kinetic-page"><a href="#" class="tablinks"
+  			<li class="kinetic-page"><a href="#" class="tablinks active"
   			onclick="updateTab(event, 'kp')">
 
   			<label id="k-tab">+</label></a>
   			</li>
   		</ul>
 
-		<div id="kp" class="kineticpage">
+		<div id="kp" class="kineticpage" style="display: -webkit-flex;">
   			<div class="text-animations">
   				<!-- animations that take up minimal space -->
   				<div class="static-animations">
@@ -67,7 +67,9 @@
   				</div>
   			</div>
       <div class="data-header">
-        <h2>Electrodermal Activity</h2>
+        <h2 style="color:#fff">Electrodermal Activity</h2>
+        <span style="color:rgb(0, 255, 0)">Current activity</span>
+        <span style="color:rgb(255, 0, 255)">My baseline</span>
       </div>
 			<div id="data">
         <!-- <canvas id="chartContainer" style="height:200px; width:70%;"></canvas> -->

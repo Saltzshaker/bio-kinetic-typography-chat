@@ -166,7 +166,7 @@ form button:focus, .active {background-color: #2aa1c0;}
 .kineticpage {
     display: none;
     color: black;
-    background-color: #afc5ca;
+    background-color: #333;
   	-webkit-flex: 1;
   	padding: 3rem;
 

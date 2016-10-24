@@ -1,7 +1,11 @@
+var inf;
+var gsr_index = 0;
 var smoothie = new SmoothieChart({
   grid: { strokeStyle:'rgb(125, 0, 0)', fillStyle:'rgb(60, 0, 0)',
-          lineWidth: 1, millisPerLine: 250, verticalSections: 6, },
-  labels: { fillStyle:'rgb(60, 0, 0)' }
+          lineWidth: 1, millisPerLine: 250, verticalSections: 6,
+        },
+  labels: { fillStyle:'rgb(255, 255, 255)' },
+  // timestampFormatter:SmoothieChart.timeFormatter
 });
 
 smoothie.streamTo(document.getElementById("mycanvas"));
@@ -10,7 +14,10 @@ smoothie.streamTo(document.getElementById("mycanvas"));
 var line1 = new TimeSeries();
 var line2 = new TimeSeries();
 
-// Add a value from gsrData.txt to the linegraph
+/* Add a value from gsrData.txt to the linegraph
+Set influence based on EDA value
+
+*/
 function plotGSRData() {
 
   $.get("text/gsrData.txt", function(data) {
@@ -22,8 +29,22 @@ function plotGSRData() {
 
     line1.append(new Date().getTime(), eda);
     line2.append(new Date().getTime(), edaFake);
+
+    if(eda > 0.097){
+      inf = "stressed";
+    }
+
+    else {
+      inf = "chill"
+    }
+
+    console.log(inf);
+    // console.log(eda);
   });
 }
+
+
+
 
 // plotGSRData every second
 setInterval(plotGSRData, 1000);

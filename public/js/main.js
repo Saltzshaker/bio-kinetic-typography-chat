@@ -10,7 +10,6 @@ $(function() {
 	var share = "y";
 	var gsrarr = [];
 	var eda = 0;
-  var inf;
 	var a = 0;
 
 // when form is submitted, add the message
@@ -31,18 +30,26 @@ $(function() {
     	}
 	});
 
+  // try to get live animations
+  function liveAnimate() {
+    $('#m').keyup(function() {
+      var input = $('#m').val();
+      animationArray[a] = inf;
+      animateText(removeName(input));
+    });
+  }
+
+  liveAnimate();
+
+// To do: When chat message is sent, if sharing is on, add animation to chat window
+
 	socket.on('chat message', function(msg){
-		var myMessage = $('#messages');
+   var myMessage = $('#messages');
 		myMessage.append($('<li>').attr("id", a).attr("class", share).data("sharing", share).text(msg));
 		myMessage.scrollTop(myMessage.prop('scrollHeight'));
 
-		//determine the current highest relative band power
-		if(e < 0.5){
-			inf = "stress";
-		}
-
 		// assign animation to the message
-		animationArray[a] = "alpha";
+		animationArray[a] = inf;
 		animateText(removeName(msg));
 		a++;
 	});
@@ -58,42 +65,6 @@ $(function() {
   	// startSending();
 	}
 
-	//when posted chat messages are clicked on, their assigned animation is replayed
-	$(document.body).on('click','#messages li',function(evt){
-
-		// alert($(this).data("sharing"));
-
-		var text = document.getElementById(this.id).innerText;
-
-		// if($(this).data("sharing") === "y") {
-		//
-		// 	if(animationArray[parseInt(this.id)] === "alpha"){
-		// 		text = removeName(text);
-				animateAlpha(text);
-			// }
-			// else if(animationArray[parseInt(this.id)] === "beta"){
-			// 	text = removeName(text);
-			// 	animateBeta(text);
-			// }
-			// else if(animationArray[parseInt(this.id)] === "delta"){
-			// 	text = removeName(text);
-			// 	animateDelta(text);
-			// }
-			// else if(animationArray[parseInt(this.id)] === "gamma"){
-			// 	text = removeName(text);
-			// 	animateGamma(text);
-			// }
-			// else if(animationArray[parseInt(this.id)] === "theta"){
-			// 	text = removeName(text);
-			// 	animateTheta(text);
-			// }
-			// else if(animationArray[parseInt(this.id)] === "stress"){
-			// 	text = removeName(text);
-			// 	animateStress(text);
-			// }
-		// }
-	});
-
 	//remove the username from the chat message
 	function removeName(txt) {
 		txt = txt.replace(/^.*?:/, "");
@@ -101,22 +72,35 @@ $(function() {
 	}
 
 	function animateText(message) {
-		if(animationArray[a] == "alpha"){
-			animateAlpha(message);
+		if(animationArray[a] == "stressed"){
+			animateStress(message);
+      // animateAlpha(message);
+      // animateBeta(message);
+      // animateGamma(message);
+      // animateTheta(message);
 		}
-		else if(animationArray[a] === "beta"){
-			animateBeta(message);
+
+		else if(animationArray[a] === "chill"){
+			animateChill(message);
 		}
 	}
 
 	//text animations
-	function animateAlpha(message) {
+	// function animateAlpha(message) {
+	// 	clearAnimations();
+	// 	$('#alpha').css('display', 'block');
+	// 	document.getElementById('animate-alpha').innerHTML = message;
+	// }
+
+  // jumps up and down
+  function animateAlpha(message) {
 		clearAnimations();
 		$('#alpha').css('display', 'block');
 		document.getElementById('animate-alpha').innerHTML = message;
 	}
 
-	function animateBeta(message) {
+  // last letter slowly swings
+  function animateBeta(message) {
 		clearAnimations();
 		$('#animate-beta').find('span').remove();
     	$('#beta').css('display', 'block');
@@ -130,19 +114,28 @@ $(function() {
     	$('#animate-beta').append('<span>'+ textArray[textArray.length-1] +'</span>');
 	}
 
-	function animateDelta(message) {
+  // shakes back and forth quickly
+  function animateStress(message) {
+    clearAnimations();
+    $('#hrv-eda').css('display', 'block');
+    document.getElementById('animate-stress').innerHTML = message;
+  }
+
+  // squashes text
+	function animateChill(message) {
 		clearAnimations();
 		$('#delta').css('display', 'block');
 		document.getElementById('animate-delta').innerHTML = message;
 	}
 
-	function animateGamma(message) {
+  //not working
+  function animateGamma(message) {
 		clearAnimations();
 		$('#animate-gamma').find('span').remove();
 		$('#animate-gamma').find('p').remove();
     	$('#gamma').css('display', 'block');
 
-    	var sentenceArray = message.split(" ");
+    var sentenceArray = message.split("");
 		var textArray = sentenceArray[1].split("");
 		var s = "";
 
@@ -162,16 +155,11 @@ $(function() {
 		}, 3000);
 	}
 
-	function animateTheta(message) {
+  // large and slow tilt
+  function animateTheta(message) {
 		clearAnimations();
 		$('#theta').css('display', 'block');
 		document.getElementById('animate-theta').innerHTML = message;
-	}
-
-	function animateStress(message) {
-		clearAnimations();
-		$('#hrv-eda').css('display', 'block');
-		document.getElementById('animate-stress').innerHTML = message;
 	}
 
 	function clearAnimations() {
@@ -202,7 +190,7 @@ function openTab(evt, pageName) {
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("kineticpage");
     for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+        tabcontent[i].style.display = "display: -webkit-flex;";
     }
 
     // Get all elements with class="tablinks" and remove the class "active"
@@ -213,7 +201,7 @@ function openTab(evt, pageName) {
 
     //show the current tab and add an "active" class to the link that opened the tab
     document.getElementById(pageName).style.display = "-webkit-flex";
-    document.getElementById("inner-kp").style.display = "inline-block";
+    // document.getElementById("inner-kp").style.display = "inline-block";
     evt.currentTarget.className += " active";
 }
 
