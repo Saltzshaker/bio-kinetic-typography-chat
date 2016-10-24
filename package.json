@@ -8,4 +8,7 @@
     "node-muse": "latest",
     "serialport": "latest"
   }
+  "scripts": {
+  "start": "node index.js"
+  }
 }
