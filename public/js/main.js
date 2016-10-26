@@ -3,218 +3,307 @@ var e;
 var gsrarr;
 var gsr_index = 0;
 var socket = io.connect();
+var input;
+var a = 0;
 
 // define empty animation array with animation object
 $(function() {
-	var animationArray = [];
-	var share = "y";
-	var gsrarr = [];
-	var eda = 0;
-	var a = 0;
+    var share = "y";
+    var gsrarr = [];
+    var eda = 0;
 
-	// when form is submitted, add the message
-	$('form').submit(function(){
-		socket.emit('chat message', $('#m').val());
-		$('#m').val('');
-		return false;
-	});
+    // when form is submitted, add the message
+    $('form').submit(function() {
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        return false;
+    });
 
-	//IMPLEMENT option to share your animation with chat users
-	$('#share-data').change(function() {
-		if($(this).is(":checked")){
-			//share with both users
-			share = "y";
-		}
-		else{
-			share = "n";
-		}
-	});
+    //IMPLEMENT option to share your animation with chat users
+    $('#share-data').change(function() {
+        if ($(this).is(":checked")) {
+            //share with both users
+            share = "y";
+        } else {
+            share = "n";
+        }
+    });
 
-	// try to get live animations
-	function liveAnimate() {
-		$('#m').keyup(function() {
-			// the input being typed by the user
-			var input = $('#m').val();
+    // try to get live animations
+    function liveAnimate() {
+        $('#m').keyup(function() {
+            // the input being typed by the user
+            input = $('#m').val();
 
-			// assign animation to the message influence determined by plotGSRData() in linegraph.js
-			animationArray[a] = inf;
-			animateText(removeName(input));
-			animatePreview(removeName(input));
+            // assign animation to the message influence determined by plotGSRData() in linegraph.js
+            animateText(removeName(input));
+            animatePreview(removeName(input));
+        });
+    }
+
+    // Run the liveAnimate function
+    liveAnimate();
+
+    // On click in animation library, swap out animateText
+    $("#animate-tilt-preview").click(function() {
+        console.log("tilt click");
+        $('#myModal').modal('toggle');
+        input = $('#m').val();
+        console.log(input);
+        inf = "tilty";
+        animateText(removeName(input));
+    });
+
+    $("#animate-swing-preview").click(function() {
+        console.log("swing click");
+        $('#myModal').modal('toggle');
+        input = $('#m').val();
+        console.log(input);
+        inf = "swingy";
+        animateText(removeName(input));
+    });
+
+    $("#animate-jump-preview").click(function() {
+        console.log("jump click");
+        $('#myModal').modal('toggle');
+        input = $('#m').val();
+        console.log(input);
+        inf = "jumpy";
+        animateText(removeName(input));
+    });
+
+    $("#animate-shake-preview").click(function() {
+        console.log("jump click");
+        $('#myModal').modal('toggle');
+        input = $('#m').val();
+        console.log(input);
+        inf = "stressed";
+        animateText(removeName(input));
+    });
+
+    $("#animate-squash-preview").click(function() {
+        console.log("jump click");
+        $('#myModal').modal('toggle');
+        input = $('#m').val();
+        console.log(input);
+        inf = "chill";
+        animateText(removeName(input));
+    });
+
+
+    // To do: When chat message is sent, if sharing is on, add animation to chat window
+
+    socket.on('chat message', function(msg) {
+        var myMessage = $('#messages');
+        myMessage.append($('<li>').attr("id", a).attr("class", share).data("sharing", share).text(msg));
+        myMessage.scrollTop(myMessage.prop('scrollHeight'));
+
+        // assign animation to the message
+        animateText(removeName(msg));
+        animatePreview(removeName(msg));
+    });
+
+    $("button[name='submit']").click(setUsername);
+
+    // Sets the client's username
+    function setUsername() {
+        var name = document.getElementById('usernameInput').value;
+        socket.emit('add user', name);
+        document.getElementById("l").style.display = "none";
+        document.getElementById("c").style.display = "-webkit-flex";
+        // startSending();
+    }
+
+    //remove the username from the chat message
+    function removeName(txt) {
+        txt = txt.replace(/^.*?:/, "");
+        return txt;
+    }
+
+    // Animate text in main animation box
+		$('#myModal').on('hidden.bs.modal', function() {
+			if (inf != "chill"){
+				$("#animate-squash-preview").removeClass("selected-effect-border");
+			}
+			if (inf != "stressed") {}
+			$("#animate-shake-preview").removeClass("selected-effect-border");
 		});
-	}
 
-	liveAnimate();
+    function animateText(message) {
+        console.log(inf);
 
-	// To do: When chat message is sent, if sharing is on, add animation to chat window
+        if (inf === "stressed") {
+            animateShake(message);
+            $("#animate-shake-preview").addClass("selected-effect-border");
+        }
 
-	socket.on('chat message', function(msg){
-		var myMessage = $('#messages');
-		myMessage.append($('<li>').attr("id", a).attr("class", share).data("sharing", share).text(msg));
-		myMessage.scrollTop(myMessage.prop('scrollHeight'));
 
-		// assign animation to the message
-		animationArray[a] = inf;
-		animateText(removeName(msg));
-		animatePreview(removeName(msg));
-		a++;
-	});
+        else if (inf === "chill") {
+            animateSquash(message);
+            $("#animate-squash-preview").addClass("selected-effect-border");
+        } else if (inf === "jumpy") {
+            animateJump(message);
+        } else if (inf === "swingy") {
+            animateSwing(message);
+        } else if (inf === "tilty") {
+            animateTilt(message);
+        }
+    }
 
-	$("button[name='submit']").click(setUsername);
+    // animate all text effects in preview box
+    function animatePreview(message) {
+        animateShakePreview(message);
+        animateJumpPreview(message);
+        animateSwingPreview(message);
+        animateTiltPreview(message);
+        animateSquashPreview(message);
+    }
 
-	// Sets the client's username
-	function setUsername() {
-		var name = document.getElementById('usernameInput').value;
-		socket.emit('add user', name);
-		document.getElementById("l").style.display = "none";
-		document.getElementById("c").style.display = "-webkit-flex";
-		// startSending();
-	}
+    //////////////////// ADD ANIMATIONS TO PREVIEW & MODAL ////////////////////
 
-	//remove the username from the chat message
-	function removeName(txt) {
-		txt = txt.replace(/^.*?:/, "");
-		return txt;
-	}
+    // Animate in main box //
 
-	function animateText(message) {
-		if(animationArray[a] == "stressed"){
-			animateShake(message);
-		}
+    // jumps up and down
+    function animateJump(message) {
+        clearAnimations();
+        $('#jump').css('display', 'block');
+        document.getElementById('animate-jump').innerHTML = message;
+    }
 
-		else if(animationArray[a] === "chill"){
-			animateSquash(message);
-		}
-	}
+    // last letter slowly swings
+    function animateSwing(message) {
+        clearAnimations();
+        $('#animate-swing').find('span').remove();
+        $('#swing').css('display', 'block');
 
-	function animatePreview(message) {
-		animateShake(message);
-		animateJump(message);
-		animateSwing(message);
-		animateTilt(message);
-		animateSquash(message);
-	}
+        var textArray = message.split("");
+        var prevLetters = "";
+        for (i = 0; i < textArray.length - 1; i++) {
+            prevLetters = prevLetters + textArray[i];
+        }
+        $('#animate-swing').append('<span>' + prevLetters + '</span>');
+        $('#animate-swing').append('<span>' + textArray[textArray.length - 1] + '</span>');
+    }
 
-	//text animations
-	// function animatejump(message) {
-	// 	clearAnimations();
-	// 	$('#jump').css('display', 'block');
-	// 	document.getElementById('animate-jump').innerHTML = message;
-	// }
+    // shakes back and forth quickly
+    function animateShake(message) {
+        clearAnimations();
+        $('#shake').css('display', 'block');
+        document.getElementById('animate-shake').innerHTML = message;
+    }
 
-//////////////////// ADD ANIMATIONS TO PREVIEW & MODAL ////////////////////
+    // squashes text
+    function animateSquash(message) {
+        clearAnimations();
+        $('#squash').css('display', 'block');
+        document.getElementById('animate-squash').innerHTML = message;
+    }
 
-	// jumps up and down
-	function animateJump(message) {
-		clearAnimations();
-		$('#jump').css('display', 'block');
-		$('#jump-preview').css('display', 'block');
-		document.getElementById('animate-jump').innerHTML = message;
-		document.getElementById('animate-jump-preview').innerHTML = message;
-	}
+    // large and slow tilt
+    function animateTilt(message) {
+        clearAnimations();
+        $('#tilt').css('display', 'block');
+        document.getElementById('animate-tilt').innerHTML = message;
+    }
 
-	// last letter slowly swings
-	function animateSwing(message) {
-		clearAnimations();
-		$('#animate-swing').find('span').remove();
-		$('#animate-swing-preview').find('span').remove();
-		$('#swing').css('display', 'block');
-		$('#swing-preview').css('display', 'block');
+    //// Animate in effect library /////
 
-		var textArray = message.split("");
-		var prevLetters = "";
-		for (i=0; i < textArray.length-1; i++) {
-			prevLetters = prevLetters + textArray[i];
-		}
-		$('#animate-swing').append('<span>'+ prevLetters +'</span>');
-		$('#animate-swing').append('<span>'+ textArray[textArray.length-1] +'</span>');
+    // jumps up and down
+    function animateJumpPreview(message) {
+        $('#jump-preview').css('display', 'block');
+        document.getElementById('animate-jump-preview').innerHTML = message;
+    }
 
-		$('#animate-swing-preview').append('<span>'+ prevLetters +'</span>');
-		$('#animate-swing-preview').append('<span>'+ textArray[textArray.length-1] +'</span>');
-	}
+    // last letter slowly swings
+    function animateSwingPreview(message) {
+        $('#animate-swing-preview').find('span').remove();
+        $('#swing-preview').css('display', 'block');
 
-	// shakes back and forth quickly
-	function animateShake(message) {
-		clearAnimations();
-		$('#shake').css('display', 'block');
-		$('#shake-preview').css('display', 'block');
-		document.getElementById('animate-shake').innerHTML = message;
-		document.getElementById('animate-shake-preview').innerHTML = message;
-	}
+        var textArray = message.split("");
+        var prevLetters = "";
+        for (i = 0; i < textArray.length - 1; i++) {
+            prevLetters = prevLetters + textArray[i];
+        }
 
-	// squashes text
-	function animateSquash(message) {
-		clearAnimations();
-		$('#squash').css('display', 'block');
-		$('#squash-preview').css('display', 'block');
-		document.getElementById('animate-squash').innerHTML = message;
-		document.getElementById('animate-squash-preview').innerHTML = message;
-	}
+        $('#animate-swing-preview').append('<span>' + prevLetters + '</span>');
+        $('#animate-swing-preview').append('<span>' + textArray[textArray.length - 1] + '</span>');
+    }
 
-	// large and slow tilt
-	function animateTilt(message) {
-		clearAnimations();
-		$('#tilt').css('display', 'block');
-		$('#tilt-preview').css('display', 'block');
-		document.getElementById('animate-tilt').innerHTML = message;
-		document.getElementById('animate-tilt-preview').innerHTML = message;
-	}
+    // shakes back and forth quickly
+    function animateShakePreview(message) {
+        $('#shake-preview').css('display', 'block');
+        document.getElementById('animate-shake').innerHTML = message;
+        document.getElementById('animate-shake-preview').innerHTML = message;
+    }
 
-	function clearAnimations() {
-		$('#jump').css('display', 'none');
-		$('#swing').css('display', 'none');
-		$('#squash').css('display', 'none');
-		$('#gamma').css('display', 'none');
-		$('#tilt').css('display', 'none');
-		$('#shake').css('display', 'none');
-	}
+    // squashes text
+    function animateSquashPreview(message) {
+        $('#squash-preview').css('display', 'block');
+        document.getElementById('animate-squash-preview').innerHTML = message;
+    }
+
+    // large and slow tilt
+    function animateTiltPreview(message) {
+        $('#tilt-preview').css('display', 'block');
+        document.getElementById('animate-tilt-preview').innerHTML = message;
+    }
+
+    //// Clear animations /////
+
+    function clearAnimations() {
+        $('#jump').css('display', 'none');
+        $('#swing').css('display', 'none');
+        $('#squash').css('display', 'none');
+        $('#tilt').css('display', 'none');
+        $('#shake').css('display', 'none');
+    }
 
 });
 
 //////////////////// TABS ////////////////////
 
 function updateTab(evt, pageName) {
-	var pageName = 'kp';
-	if(document.getElementById('k-tab').innerHTML == '+'){
-		openTab(evt, pageName);
-	}
-	else {
-		closeTab(evt, pageName);
-	}
+    var pageName = 'kp';
+    if (document.getElementById('k-tab').innerHTML == '+') {
+        openTab(evt, pageName);
+    } else {
+        closeTab(evt, pageName);
+    }
 }
 
 function openTab(evt, pageName) {
-	var i, tabcontent, tablinks;
-	document.getElementById('k-tab').innerHTML = '-';
+    var i, tabcontent, tablinks;
+    document.getElementById('k-tab').innerHTML = '-';
 
-	// Get all elements with class="tabcontent" and hide them
-	tabcontent = document.getElementsByClassName("kineticpage");
-	for (i = 0; i < tabcontent.length; i++) {
-		tabcontent[i].style.display = "display: -webkit-flex;";
-	}
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("kineticpage");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "display: -webkit-flex;";
+    }
 
-	// Get all elements with class="tablinks" and remove the class "active"
-	tablinks = document.getElementsByClassName("tablinks");
-	for (i = 0; i < tablinks.length; i++) {
-		tablinks[i].className = tablinks[i].className.replace(" active", "");
-	}
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
 
-	//show the current tab and add an "active" class to the link that opened the tab
-	document.getElementById(pageName).style.display = "-webkit-flex";
-	// document.getElementById("inner-kp").style.display = "inline-block";
-	evt.currentTarget.className += " active";
+    //show the current tab and add an "active" class to the link that opened the tab
+    document.getElementById(pageName).style.display = "-webkit-flex";
+    // document.getElementById("inner-kp").style.display = "inline-block";
+    evt.currentTarget.className += " active";
 }
 
 function closeTab(evt, pageName) {
-	var i, tabcontent, tablinks;
-	document.getElementById('k-tab').innerHTML = '+';
+    var i, tabcontent, tablinks;
+    document.getElementById('k-tab').innerHTML = '+';
 
-	tabcontent = document.getElementsByClassName("kineticpage");
-	for (i = 0; i < tabcontent.length; i++) {
-		tabcontent[i].style.display = "none";
-	}
+    tabcontent = document.getElementsByClassName("kineticpage");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
 
-	tablinks = document.getElementsByClassName("tablinks");
-	for (i = 0; i < tablinks.length; i++) {
-		tablinks[i].className = tablinks[i].className.replace(" active", "");
-	}
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
 }

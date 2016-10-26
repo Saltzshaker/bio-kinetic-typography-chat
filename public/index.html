@@ -2,165 +2,167 @@
 <html>
 
 <head>
-  <title>Socket.IO chat</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/animation-style.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animation-style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.0-rc.2/Chart.js"></script>
-  <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  <script src="/scripts/smoothie.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.0-rc.2/Chart.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/scripts/smoothie.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 </head>
 
 <body>
 
-  <section id="l" class="login-page">
+    <section id="l" class="login-page">
 
-    <h1>What's your username?</h1>
+        <h1>What's your username?</h1>
 
-    <div class="login-info">
-      <input id="usernameInput" type="text" maxlength="14" autocomplete="off" />
-      <button name="submit" onclick="setUsername()">SUBMIT</button>
-    </div>
-
-  </section>
-
-  <section id="c" class="container">
-
-    <ul class="tab">
-      <li class="kinetic-page"><a href="#" class="tablinks active"
-        onclick="updateTab(event, 'kp')">
-
-        <label id="k-tab">+</label></a>
-      </li>
-    </ul>
-
-    <div id="kp" class="kineticpage" style="display: -webkit-flex;">
-      <div class="text-animations">
-        <!-- animations that take up minimal space -->
-        <div class="static-animations">
-          <div id="swing" style="display: none">
-            <div id="animate-swing" class="t thinking"></div>
-          </div>
-          <div id="squash" style="display: none">
-            <p id="animate-squash" class="sleepy"></p>
-          </div>
-          <div id="shake" style="display: none">
-            <p id="animate-shake" class="shake"></p>
-          </div>
+        <div class="login-info">
+            <input id="usernameInput" type="text" maxlength="14" autocomplete="off" />
+            <button name="submit" onclick="setUsername()">SUBMIT</button>
         </div>
-        <div class="mid-animations">
-          <div id="gamma" style="display: none">
-            <div id="animate-gamma" class="i inspired"></div>
-          </div>
-        </div>
-        <!-- animations that take up more vertical space -->
-        <div class="up-animations">
 
-          <div id="jump" style="display: none">
-            <p id="animate-jump" class="content"></p>
-          </div>
+    </section>
 
-          <div id="tilt" style="display: none">
-            <div class="daydreaming">
-              <p id="animate-tilt" class="drift"></p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <section id="c" class="container">
 
-      <!-- Trigger the modal with a button -->
-      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Choose effect</button>
+        <ul class="tab">
+            <li class="kinetic-page">
+                <a href="#" class="tablinks active" onclick="updateTab(event, 'kp')">
 
-      <!-- Modal -->
-      <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
+                    <label id="k-tab">+</label></a>
+            </li>
+        </ul>
 
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Text effects</h4>
-              <div class="text-animations-preview">
+        <div id="kp" class="kineticpage" style="display: -webkit-flex;">
+            <div class="text-animations">
                 <!-- animations that take up minimal space -->
                 <div class="static-animations">
-                  <div id="swing-preview" style="display: none">
-                    <div id="animate-swing-preview" class="t thinking"></div>
-                  </div>
-                  <div id="squash-preview" style="display: none">
-                    <p id="animate-squash-preview" class="sleepy"></p>
-                  </div>
-                  <div id="shake-preview" style="display: none">
-                    <p id="animate-shake-preview" class="shake"></p>
-                  </div>
+                    <div id="swing" style="display: none">
+                        <div id="animate-swing" class="t thinking"></div>
+                    </div>
+                    <div id="squash" style="display: none">
+                        <p id="animate-squash" class="sleepy"></p>
+                    </div>
+                    <div id="shake" style="display: none">
+                        <p id="animate-shake" class="shake"></p>
+                    </div>
                 </div>
                 <div class="mid-animations">
+                    <div id="gamma" style="display: none">
+                        <div id="animate-gamma" class="i inspired"></div>
+                    </div>
                 </div>
                 <!-- animations that take up more vertical space -->
                 <div class="up-animations">
 
-                  <div id="jump-preview" style="display: none">
-                    <p id="animate-jump-preview" class="content"></p>
-                  </div>
-
-                  <div id="tilt-preview" style="display: none">
-                    <div class="daydreaming">
-                      <p id="animate-tilt-preview" class="drift"></p>
+                    <div id="jump" style="display: none">
+                        <p id="animate-jump" class="content"></p>
                     </div>
-                  </div>
+
+                    <div id="tilt" style="display: none">
+                        <div class="daydreaming">
+                            <p id="animate-tilt" class="drift"></p>
+                        </div>
+                    </div>
                 </div>
-              </div>
+            </div> <!--  End text animations -->
 
+            <!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Choose effect</button>
+
+            <!-- Modal -->
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Text effects</h4>
+                            <div class="text-animations-preview">
+                                <!-- animations that take up minimal space -->
+                                <div class="static-animations">
+                                    <div id="swing-preview" style="display: none">
+                                        <div id="animate-swing-preview" class="t thinking"></div>
+                                    </div>
+                                    <div id="squash-preview" style="display: none">
+                                        <p id="animate-squash-preview" class="sleepy"></p>
+                                    </div>
+                                    <div id="shake-preview" style="display: none">
+                                        <p id="animate-shake-preview" class="shake"></p>
+                                    </div>
+                                </div>
+                                <div class="mid-animations">
+                                </div>
+                                <!-- animations that take up more vertical space -->
+                                <div class="up-animations">
+
+                                    <div id="jump-preview" style="display: none">
+                                        <p id="animate-jump-preview" class="content"></p>
+                                    </div>
+
+                                    <div id="tilt-preview" style="display: none">
+                                        <div class="daydreaming">
+                                            <p id="animate-tilt-preview" class="drift"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div> <!-- End of modal-->
+
+            <!-- Electrodermal data -->
+            <div class="data-header">
+                <h2 style="color:#fff">Electrodermal Activity</h2>
+                <span style="color:rgb(0, 255, 0)">Current activity</span>
+                <span style="color:rgb(255, 0, 255)">My baseline</span>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <div id="data">
+                <!-- <canvas id="chartContainer" style="height:200px; width:70%;"></canvas> -->
+                <canvas id="mycanvas" width="400" height="100"></canvas>
             </div>
-          </div>
 
-        </div>
-      </div>
-      <!-- End -->
+            <div id="data-inner">
+                <!--NEED TO IMPLEMENT SHARING CHECKBOX FUNCTION-->
 
-      <div class="data-header">
-        <h2 style="color:#fff">Electrodermal Activity</h2>
-        <span style="color:rgb(0, 255, 0)">Current activity</span>
-        <span style="color:rgb(255, 0, 255)">My baseline</span>
-      </div>
-      <div id="data">
-        <!-- <canvas id="chartContainer" style="height:200px; width:70%;"></canvas> -->
-        <canvas id="mycanvas" width="400" height="100"></canvas>
-      </div>
-
-      <div id="data-inner">
-        <!--NEED TO IMPLEMENT SHARING CHECKBOX FUNCTION-->
-
-        <!-- <div id="sharing">
+                <!-- <div id="sharing">
         <label class="control control~~checkbox">Sharing
         <input id="share-data" type="checkbox" checked="checked"/>
         <div class="control__indicator"></div>
       </label>
     </div> -->
 
-    <!-- <button id="connect" name="connect" onclick="connectToMuse()">Connect to Muse</button> -->
-  </div>
-</div>
-</div>
+                <!-- <button id="connect" name="connect" onclick="connectToMuse()">Connect to Muse</button> -->
+            </div>
+        </div>
+        <!-- end kineticpage -->
 
-<div class="chatpage">
-  <div class="messageContainer">
-    <ul id="messages"></ul>
-  </div>
-  <form action="">
-    <input id="m" autocomplete="off" /><button>SEND</button>
-  </form>
-</div>
+        <div class="chatpage">
+            <div class="messageContainer">
+                <ul id="messages"></ul>
+            </div>
+            <form action="">
+                <input id="m" autocomplete="off" /><button>SEND</button>
+            </form>
+        </div>
 
-</section>
-<script src="js/linegraph.js"></script>
-<script src="js/main.js"></script>
+
+    </section>
+
+    <script src="js/linegraph.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
