@@ -85,54 +85,55 @@ $(function() {
 
 	function animatePreview(message) {
 		animateStress(message);
-		animateAlpha(message);
-		animateBeta(message);
-		animateTheta(message);
+		animateJump(message);
+		animateSwing(message);
+		animateTilt(message);
 		animateChill(message);
-
 	}
 
 	//text animations
-	// function animateAlpha(message) {
+	// function animatejump(message) {
 	// 	clearAnimations();
-	// 	$('#alpha').css('display', 'block');
-	// 	document.getElementById('animate-alpha').innerHTML = message;
+	// 	$('#jump').css('display', 'block');
+	// 	document.getElementById('animate-jump').innerHTML = message;
 	// }
 
+//////////////////// ADD ANIMATIONS TO PREVIEW & MODAL ////////////////////
+
 	// jumps up and down
-	function animateAlpha(message) {
+	function animateJump(message) {
 		clearAnimations();
-		$('#alpha').css('display', 'block');
-		$('#alpha-preview').css('display', 'block');
-		document.getElementById('animate-alpha').innerHTML = message;
-		document.getElementById('animate-alpha-preview').innerHTML = message;
+		$('#jump').css('display', 'block');
+		$('#jump-preview').css('display', 'block');
+		document.getElementById('animate-jump').innerHTML = message;
+		document.getElementById('animate-jump-preview').innerHTML = message;
 	}
 
 	// last letter slowly swings
-	function animateBeta(message) {
+	function animateSwing(message) {
 		clearAnimations();
-		$('#animate-beta').find('span').remove();
-		$('#animate-beta-preview').find('span').remove();
-		$('#beta').css('display', 'block');
-		$('#beta-preview').css('display', 'block');
+		$('#animate-swing').find('span').remove();
+		$('#animate-swing-preview').find('span').remove();
+		$('#swing').css('display', 'block');
+		$('#swing-preview').css('display', 'block');
 
 		var textArray = message.split("");
 		var prevLetters = "";
 		for (i=0; i < textArray.length-1; i++) {
 			prevLetters = prevLetters + textArray[i];
 		}
-		$('#animate-beta').append('<span>'+ prevLetters +'</span>');
-		$('#animate-beta').append('<span>'+ textArray[textArray.length-1] +'</span>');
+		$('#animate-swing').append('<span>'+ prevLetters +'</span>');
+		$('#animate-swing').append('<span>'+ textArray[textArray.length-1] +'</span>');
 
-		$('#animate-beta-preview').append('<span>'+ prevLetters +'</span>');
-		$('#animate-beta-preview').append('<span>'+ textArray[textArray.length-1] +'</span>');
+		$('#animate-swing-preview').append('<span>'+ prevLetters +'</span>');
+		$('#animate-swing-preview').append('<span>'+ textArray[textArray.length-1] +'</span>');
 	}
 
 	// shakes back and forth quickly
 	function animateStress(message) {
 		clearAnimations();
-		$('#hrv-eda').css('display', 'block');
-		$('#hrv-eda-preview').css('display', 'block');
+		$('#stress').css('display', 'block');
+		$('#stress-preview').css('display', 'block');
 		document.getElementById('animate-stress').innerHTML = message;
 		document.getElementById('animate-stress-preview').innerHTML = message;
 	}
@@ -140,10 +141,10 @@ $(function() {
 	// squashes text
 	function animateChill(message) {
 		clearAnimations();
-		$('#delta').css('display', 'block');
-		$('#delta-preview').css('display', 'block');
-		document.getElementById('animate-delta').innerHTML = message;
-		document.getElementById('animate-delta-preview').innerHTML = message;
+		$('#chill').css('display', 'block');
+		$('#chill-preview').css('display', 'block');
+		document.getElementById('animate-chill').innerHTML = message;
+		document.getElementById('animate-chill-preview').innerHTML = message;
 	}
 
 	//not working
@@ -174,24 +175,26 @@ $(function() {
 	// }
 
 	// large and slow tilt
-	function animateTheta(message) {
+	function animateTilt(message) {
 		clearAnimations();
-		$('#theta').css('display', 'block');
-		$('#theta-preview').css('display', 'block');
-		document.getElementById('animate-theta').innerHTML = message;
-		document.getElementById('animate-theta-preview').innerHTML = message;
+		$('#tilt').css('display', 'block');
+		$('#tilt-preview').css('display', 'block');
+		document.getElementById('animate-tilt').innerHTML = message;
+		document.getElementById('animate-tilt-preview').innerHTML = message;
 	}
 
 	function clearAnimations() {
-		$('#alpha').css('display', 'none');
-		$('#beta').css('display', 'none');
-		$('#delta').css('display', 'none');
+		$('#jump').css('display', 'none');
+		$('#swing').css('display', 'none');
+		$('#chill').css('display', 'none');
 		$('#gamma').css('display', 'none');
-		$('#theta').css('display', 'none');
-		$('#hrv-eda').css('display', 'none');
+		$('#tilt').css('display', 'none');
+		$('#stress').css('display', 'none');
 	}
 
 });
+
+//////////////////// TABS ////////////////////
 
 function updateTab(evt, pageName) {
 	var pageName = 'kp';

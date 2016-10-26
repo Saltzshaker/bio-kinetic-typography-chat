@@ -1,4 +1,4 @@
-/* alpha waves animation */
+/* jump  animation */
 .content {
   -webkit-animation: bounce 0.4s infinite alternate;
   font-size: 2em;
@@ -12,7 +12,7 @@
    } 
 }
 
-/* beta waves animation */
+/* swing  animation */
 .t{
  display: inline-block;
 }
@@ -39,7 +39,7 @@
     -webkit-animation-iteration-count: infinite; 
 }
 
-/* gamma waves animation */
+/* gamma  animation */
 .i {
 	display: inline-block;
 }
@@ -174,7 +174,7 @@
 	animation-delay: 6.75s;
 }
 
-/* delta waves animation */
+/* chill  animation */
 .sleepy {
 	-webkit-animation-name: flop;
 	-webkit-animation-duration: 4s;
@@ -195,7 +195,7 @@
 	}
 }
 
-/* theta waves animation */
+/* tilt  animation */
 .daydreaming {
 	display: inline-block;
     -webkit-animation-name: floating;
