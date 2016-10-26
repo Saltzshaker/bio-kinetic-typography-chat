@@ -120,12 +120,9 @@ $(function() {
         return txt;
     }
 
-    // Animate text in main animation box
+		// Animate text in main animation box
 		$('#myModal').on('hidden.bs.modal', function() {
-			if (inf != "chill"){
-				$("#animate-squash-preview").removeClass("selected-effect-border");
-			}
-			if (inf != "stressed") {}
+			$("#animate-squash-preview").removeClass("selected-effect-border");
 			$("#animate-shake-preview").removeClass("selected-effect-border");
 		});
 
@@ -135,18 +132,25 @@ $(function() {
         if (inf === "stressed") {
             animateShake(message);
             $("#animate-shake-preview").addClass("selected-effect-border");
+
         }
 
 
         else if (inf === "chill") {
             animateSquash(message);
             $("#animate-squash-preview").addClass("selected-effect-border");
+
         } else if (inf === "jumpy") {
             animateJump(message);
+						$("#animate-squash-preview").addClass("selected-effect-border");
+
         } else if (inf === "swingy") {
             animateSwing(message);
+						$("#animate-squash-preview").addClass("selected-effect-border");
+
         } else if (inf === "tilty") {
             animateTilt(message);
+						$("#animate-squash-preview").addClass("selected-effect-border");
         }
     }
 
