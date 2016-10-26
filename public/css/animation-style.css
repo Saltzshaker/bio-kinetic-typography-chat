@@ -7,9 +7,9 @@
 
 @-webkit-keyframes bounce {
    0% {
-    -webkit-transform: translateY(-80px); 
+    -webkit-transform: translateY(-80px);
      letter-spacing: -0.012em;
-   } 
+   }
 }
 
 /* swing  animation */
@@ -25,7 +25,7 @@
 }
 
 @keyframes swing {
-  
+
   0% {transform: rotate3d(0, 0, 1, 15deg);}
   50% {transform: rotate3d(0, 0, 1, 0deg);}
   to {transform: rotate3d(0, 0, 1, 15deg);}
@@ -36,7 +36,7 @@
 	-webkit-transform-origin: top center;
   	-webkit-animation-name: swing;
   	-webkit-animation-duration: 0.5s;
-    -webkit-animation-iteration-count: infinite; 
+    -webkit-animation-iteration-count: infinite;
 }
 
 /* gamma  animation */
@@ -174,14 +174,14 @@
 	animation-delay: 6.75s;
 }
 
-/* chill  animation */
+/* squash  animation */
 .sleepy {
 	-webkit-animation-name: flop;
 	-webkit-animation-duration: 4s;
     -webkit-animation-iteration-count: infinite;
-    -webkit-perspective: 500; 
+    -webkit-perspective: 500;
 	-webkit-transform-style: preserve-3d;
-	-webkit-transition-property: transform; 
+	-webkit-transition-property: transform;
 	-webkit-transition-duration: 0.5s;
 	-webkit-transform: translateZ(30px) rotateX(90deg);
 	font-size: 2em;
@@ -214,12 +214,12 @@
 }
 
 @-webkit-keyframes rotating {
-    
+
      0% {-webkit-transform: rotate(0deg);}
-    
+
     20% {-webkit-transform: rotate(-20deg);}
     60% {-webkit-transform: rotate(5deg);}
-    
+
     80% {-webkit-transform: rotate(10deg);}
     100% {-webkit-transform: rotate(0deg);}
 
@@ -232,22 +232,22 @@
 
 	75% {-webkit-transform:translate(15px, -45px);}
 
-    to {-webkit-transform: translate(0, 0px);} 
-   
+    to {-webkit-transform: translate(0, 0px);}
+
 }
 
 /* high heart rate and electrodermal activity animation */
-.stress {
+.shake {
     -webkit-animation-name: shake;
     -webkit-animation-duration: 0.8s;
-    -webkit-animation-iteration-count: infinite; 
+    -webkit-animation-iteration-count: infinite;
     -webkit-animation-fill-mode: both;
     font-size: 2em;
 	font-family: Tahoma, Geneva, sans-serif;
 }
- 
+
 @-webkit-keyframes shake {
-    from, to {-webkit-transform: translate3d(0, 0, 0);} 
-    10%, 30%, 50%, 70%, 90% {-webkit-transform: translate3d(-10px, 0, 0);} 
-    20%, 40%, 60%, 80% {-webkit-transform: translate3d(10px, 0, 0);} 
+    from, to {-webkit-transform: translate3d(0, 0, 0);}
+    10%, 30%, 50%, 70%, 90% {-webkit-transform: translate3d(-10px, 0, 0);}
+    20%, 40%, 60%, 80% {-webkit-transform: translate3d(10px, 0, 0);}
 }

@@ -33,7 +33,10 @@ $(function() {
 	// try to get live animations
 	function liveAnimate() {
 		$('#m').keyup(function() {
+			// the input being typed by the user
 			var input = $('#m').val();
+
+			// assign animation to the message influence determined by plotGSRData() in linegraph.js
 			animationArray[a] = inf;
 			animateText(removeName(input));
 			animatePreview(removeName(input));
@@ -75,20 +78,20 @@ $(function() {
 
 	function animateText(message) {
 		if(animationArray[a] == "stressed"){
-			animateStress(message);
+			animateShake(message);
 		}
 
 		else if(animationArray[a] === "chill"){
-			animateChill(message);
+			animateSquash(message);
 		}
 	}
 
 	function animatePreview(message) {
-		animateStress(message);
+		animateShake(message);
 		animateJump(message);
 		animateSwing(message);
 		animateTilt(message);
-		animateChill(message);
+		animateSquash(message);
 	}
 
 	//text animations
@@ -130,49 +133,22 @@ $(function() {
 	}
 
 	// shakes back and forth quickly
-	function animateStress(message) {
+	function animateShake(message) {
 		clearAnimations();
-		$('#stress').css('display', 'block');
-		$('#stress-preview').css('display', 'block');
-		document.getElementById('animate-stress').innerHTML = message;
-		document.getElementById('animate-stress-preview').innerHTML = message;
+		$('#shake').css('display', 'block');
+		$('#shake-preview').css('display', 'block');
+		document.getElementById('animate-shake').innerHTML = message;
+		document.getElementById('animate-shake-preview').innerHTML = message;
 	}
 
 	// squashes text
-	function animateChill(message) {
+	function animateSquash(message) {
 		clearAnimations();
-		$('#chill').css('display', 'block');
-		$('#chill-preview').css('display', 'block');
-		document.getElementById('animate-chill').innerHTML = message;
-		document.getElementById('animate-chill-preview').innerHTML = message;
+		$('#squash').css('display', 'block');
+		$('#squash-preview').css('display', 'block');
+		document.getElementById('animate-squash').innerHTML = message;
+		document.getElementById('animate-squash-preview').innerHTML = message;
 	}
-
-	//not working
-	// function animateGamma(message) {
-	// 	clearAnimations();
-	// 	$('#animate-gamma').find('span').remove();
-	// 	$('#animate-gamma').find('p').remove();
-	//   	$('#gamma').css('display', 'block');
-	//
-	//   var sentenceArray = message.split("");
-	// 	var textArray = sentenceArray[1].split("");
-	// 	var s = "";
-	//
-	// 	for (i=0; i < textArray.length; i++) {
-	// 		if(textArray[i] === " "){
-	// 			break;
-	// 		}
-	// 		else {
-	// 			$('#animate-gamma').append('<span>'+ textArray[i] +'</span>');
-	// 		}
-	// 	}
-	// 	setTimeout(function () {
-	// 	for (t=2; t < sentenceArray.length; t++) {
-	// 		s = s + " " + sentenceArray[t];
-	// 	}
-	// 	$('#animate-gamma').append('<p style="display: inline; font-size: 2em; font-family: Tahoma, Geneva, sans-serif;"> '+ s +'</p>');
-	// 	}, 3000);
-	// }
 
 	// large and slow tilt
 	function animateTilt(message) {
@@ -186,10 +162,10 @@ $(function() {
 	function clearAnimations() {
 		$('#jump').css('display', 'none');
 		$('#swing').css('display', 'none');
-		$('#chill').css('display', 'none');
+		$('#squash').css('display', 'none');
 		$('#gamma').css('display', 'none');
 		$('#tilt').css('display', 'none');
-		$('#stress').css('display', 'none');
+		$('#shake').css('display', 'none');
 	}
 
 });

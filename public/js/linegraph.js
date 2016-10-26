@@ -38,7 +38,7 @@ function plotGSRData() {
       inf = "chill"
     }
 
-    console.log(inf);
+    // console.log(inf);
     // console.log(eda);
   });
 }
