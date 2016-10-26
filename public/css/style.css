@@ -186,6 +186,17 @@ form button:focus, .active {background-color: #2aa1c0;}
 	line-height: 250%;
 }
 
+.text-animations-preview {
+	background-color: white;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	height: 200px;
+	width: 100%;
+	word-wrap: break-word;
+	overflow-y: scroll;
+	line-height: 250%;
+}
+
 .static-animations {
 	margin: 20px 20px 0 20px;
 }

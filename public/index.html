@@ -1,110 +1,166 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <title>Socket.IO chat</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animation-style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.0-rc.2/Chart.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="/js/smoothie.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-  </head>
+<head>
+  <title>Socket.IO chat</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animation-style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-  <body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.0-rc.2/Chart.js"></script>
+  <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="/scripts/smoothie.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
 
-  	<section id="l" class="login-page">
+<body>
 
-        <h1>What's your username?</h1>
+  <section id="l" class="login-page">
 
-		<div class="login-info">
-        	<input id="usernameInput" type="text" maxlength="14" autocomplete="off" />
-			<button name="submit" onclick="setUsername()">SUBMIT</button>
-		</div>
+    <h1>What's your username?</h1>
 
-  	</section>
+    <div class="login-info">
+      <input id="usernameInput" type="text" maxlength="14" autocomplete="off" />
+      <button name="submit" onclick="setUsername()">SUBMIT</button>
+    </div>
 
-  	<section id="c" class="container">
+  </section>
 
-		<ul class="tab">
-  			<li class="kinetic-page"><a href="#" class="tablinks active"
-  			onclick="updateTab(event, 'kp')">
+  <section id="c" class="container">
 
-  			<label id="k-tab">+</label></a>
-  			</li>
-  		</ul>
+    <ul class="tab">
+      <li class="kinetic-page"><a href="#" class="tablinks active"
+        onclick="updateTab(event, 'kp')">
 
-		<div id="kp" class="kineticpage" style="display: -webkit-flex;">
-  			<div class="text-animations">
-  				<!-- animations that take up minimal space -->
-  				<div class="static-animations">
-  					<div id="beta" style="display: none">
-  						<div id="animate-beta" class="t thinking"></div>
-  					</div>
-  					<div id="delta" style="display: none">
-  						<p id="animate-delta" class="sleepy"></p>
-  					</div>
-  					<div id="hrv-eda" style="display: none">
-  						<p id="animate-stress" class="stress"></p>
-  					</div>
-  				</div>
-  				<div class="mid-animations">
-  					<div id="gamma" style="display: none">
-  						<div id="animate-gamma" class="i inspired"></div>
-  					</div>
-  				</div>
-  				<!-- animations that take up more vertical space -->
-  				<div class="up-animations">
+        <label id="k-tab">+</label></a>
+      </li>
+    </ul>
 
-  					<div id="alpha" style="display: none">
-  						<p id="animate-alpha" class="content"></p>
-  					</div>
+    <div id="kp" class="kineticpage" style="display: -webkit-flex;">
+      <div class="text-animations">
+        <!-- animations that take up minimal space -->
+        <div class="static-animations">
+          <div id="beta" style="display: none">
+            <div id="animate-beta" class="t thinking"></div>
+          </div>
+          <div id="delta" style="display: none">
+            <p id="animate-delta" class="sleepy"></p>
+          </div>
+          <div id="hrv-eda" style="display: none">
+            <p id="animate-stress" class="stress"></p>
+          </div>
+        </div>
+        <div class="mid-animations">
+          <div id="gamma" style="display: none">
+            <div id="animate-gamma" class="i inspired"></div>
+          </div>
+        </div>
+        <!-- animations that take up more vertical space -->
+        <div class="up-animations">
 
-  					<div id="theta" style="display: none">
-  						<div class="daydreaming">
-  						<p id="animate-theta" class="drift"></p>
-  						</div>
-  					</div>
-  				</div>
-  			</div>
+          <div id="alpha" style="display: none">
+            <p id="animate-alpha" class="content"></p>
+          </div>
+
+          <div id="theta" style="display: none">
+            <div class="daydreaming">
+              <p id="animate-theta" class="drift"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trigger the modal with a button -->
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Choose effect</button>
+
+      <!-- Modal -->
+      <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Text effects</h4>
+              <div class="text-animations-preview">
+                <!-- animations that take up minimal space -->
+                <div class="static-animations">
+                  <div id="beta-preview" style="display: none">
+                    <div id="animate-beta-preview" class="t thinking"></div>
+                  </div>
+                  <div id="delta-preview" style="display: none">
+                    <p id="animate-delta-preview" class="sleepy"></p>
+                  </div>
+                  <div id="hrv-eda-preview" style="display: none">
+                    <p id="animate-stress-preview" class="stress"></p>
+                  </div>
+                </div>
+                <div class="mid-animations">
+                </div>
+                <!-- animations that take up more vertical space -->
+                <div class="up-animations">
+
+                  <div id="alpha-preview" style="display: none">
+                    <p id="animate-alpha-preview" class="content"></p>
+                  </div>
+
+                  <div id="theta-preview" style="display: none">
+                    <div class="daydreaming">
+                      <p id="animate-theta-preview" class="drift"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- End -->
+
       <div class="data-header">
         <h2 style="color:#fff">Electrodermal Activity</h2>
         <span style="color:rgb(0, 255, 0)">Current activity</span>
         <span style="color:rgb(255, 0, 255)">My baseline</span>
       </div>
-			<div id="data">
+      <div id="data">
         <!-- <canvas id="chartContainer" style="height:200px; width:70%;"></canvas> -->
         <canvas id="mycanvas" width="400" height="100"></canvas>
       </div>
 
-				<div id="data-inner">
-					<!--NEED TO IMPLEMENT SHARING CHECKBOX FUNCTION-->
+      <div id="data-inner">
+        <!--NEED TO IMPLEMENT SHARING CHECKBOX FUNCTION-->
 
-<div id="sharing">
-                		<label class="control control~~checkbox">Sharing
-						<input id="share-data" type="checkbox" checked="checked"/>
-						<div class="control__indicator"></div>
-						</label>
-                	</div>
+        <!-- <div id="sharing">
+        <label class="control control~~checkbox">Sharing
+        <input id="share-data" type="checkbox" checked="checked"/>
+        <div class="control__indicator"></div>
+      </label>
+    </div> -->
 
-                	<!-- <button id="connect" name="connect" onclick="connectToMuse()">Connect to Muse</button> -->
-        </div>
-			</div>
-		</div>
+    <!-- <button id="connect" name="connect" onclick="connectToMuse()">Connect to Muse</button> -->
+  </div>
+</div>
+</div>
 
-		<div class="chatpage">
-  			<div class="messageContainer">
-				<ul id="messages"></ul>
-			</div>
-			<form action="">
-      			<input id="m" autocomplete="off" /><button>SEND</button>
-    		</form>
-  		</div>
+<div class="chatpage">
+  <div class="messageContainer">
+    <ul id="messages"></ul>
+  </div>
+  <form action="">
+    <input id="m" autocomplete="off" /><button>SEND</button>
+  </form>
+</div>
 
- 	</section>
-  <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-  <script src="js/linegraph.js"></script>
-  <script src="js/main.js"></script>
-  </body>
+</section>
+<script src="js/linegraph.js"></script>
+<script src="js/main.js"></script>
+</body>
 
 </html>

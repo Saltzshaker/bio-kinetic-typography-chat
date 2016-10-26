@@ -5,6 +5,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 app.use(express.static(__dirname + '/public'));
+app.use('/scripts', express.static(__dirname + '/node_modules/smoothie/'));
 
 
 http.listen(process.env.PORT || 3000, function(){
@@ -17,13 +18,13 @@ io.on('connection', function(socket){
 
   socket.on('chat message', function(msg){
 
-	var data = socket.username + ": " + msg;
-	io.emit('chat message', data);
+    var data = socket.username + ": " + msg;
+    io.emit('chat message', data);
 
   });
 
   socket.on('add user', function(name){
-  	socket.username = name;
+    socket.username = name;
   });
 
 });
