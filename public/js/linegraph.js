@@ -37,6 +37,7 @@ function plotGSRData() {
         edaBaseline = gsrarr[gsr_baseline_index];
         gsr_index++;
         gsr_baseline_index++
+        console.log(inf);
         // console.log("edaBaseline: " + edaBaseline + " gsr_baseline_index: " + gsr_baseline_index);
         // console.log("eda: " + eda + " gsr_index: " + gsr_index);
 
@@ -51,9 +52,23 @@ function plotGSRData() {
         line2.append(new Date().getTime(), edaBaseline);
 
         if (eda > 0.097) {
+
             inf = "stressed";
+            var stressStatus = document.getElementById('stress_status');
+            if (stressStatus === null) {
+              $(".activity").append('<p id="stress_status" class="status">High range</p>');
+              $('#chill_status').remove();
+            } else {
+            }
+
         } else {
             inf = "chill"
+            var chillStatus = document.getElementById('chill_status');
+            if (chillStatus === null) {
+              $(".activity").append('<p id="chill_status" class="status">Low range</p>');
+              $('#stress_status').remove();
+            } else {
+            }
         }
     });
 }
