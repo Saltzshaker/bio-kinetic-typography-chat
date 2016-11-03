@@ -28,15 +28,15 @@
 
     </section>
 
-    <section id="c" class="container">
+    <section id="c">
 
-        <ul class="tab">
-            <li class="kinetic-page">
-                <a href="#" class="tablinks active" onclick="updateTab(event, 'kp')">
+        <!-- <ul class="tab"> -->
+            <!-- <li class="kinetic-page"> -->
+                <!-- <a href="#" class="tablinks active" onclick="updateTab(event, 'kp')"> -->
 
-                    <label id="k-tab">+</label></a>
+                    <!-- <label id="k-tab">+</label></a>
             </li>
-        </ul>
+        </ul> -->
 
         <div id="kp" class="kineticpage" style="display: -webkit-flex;">
             <div class="text-animations">
@@ -66,6 +66,7 @@
 
                     <div id="tilt" style="display: none">
                         <div class="daydreaming">
+                          <p>test</p>
                             <p id="animate-tilt" class="drift"></p>
                         </div>
                     </div>
@@ -74,54 +75,60 @@
 
             <!-- Trigger the modal with a button -->
             <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Choose effect</button>
-
-            <!-- Modal -->
-            <div id="myModal" class="modal fade" role="dialog">
+            <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
-
-                    <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Text effects</h4>
-                            <div class="text-animations-preview">
-                                <!-- animations that take up minimal space -->
-                                <div class="static-animations">
-                                    <div id="swing-preview" style="display: none">
-                                        <div id="animate-swing-preview" class="t thinking"></div>
-                                    </div>
-                                    <div id="squash-preview" style="display: none">
-                                        <p id="animate-squash-preview" class="sleepy"></p>
-                                    </div>
-                                    <div id="shake-preview" style="display: none">
-                                        <p id="animate-shake-preview" class="shake"></p>
-                                    </div>
+                            <h3>Text effects</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                            <div class="static-animations">
+                                <div class="col-md-4">
+                                  <div id="swing-preview" style="display: none">
+                                      <div id="animate-swing-preview" class="t thinking"></div>
+                                  </div>
                                 </div>
-                                <div class="mid-animations">
+                                <div class="col-md-4">
+                                  <div id="squash-preview" style="display: none">
+                                      <p id="animate-squash-preview" class="sleepy"></p>
+                                  </div>
                                 </div>
-                                <!-- animations that take up more vertical space -->
-                                <div class="up-animations">
-
-                                    <div id="jump-preview" style="display: none">
-                                        <p id="animate-jump-preview" class="content"></p>
-                                    </div>
-
-                                    <div id="tilt-preview" style="display: none">
-                                        <div class="daydreaming">
-                                            <p id="animate-tilt-preview" class="drift"></p>
-                                        </div>
-                                    </div>
+                                <div class="col-md-4">
+                                  <div id="shake-preview" style="display: none">
+                                      <p id="animate-shake-preview" class="shake"></p>
+                                  </div>
                                 </div>
                             </div>
-
+                            </div>
+                            <div class="row">
+                            <div class="up-animations">
+                                <div class="col-md-4">
+                                  <div id="tilt-preview" style="display: none">
+                                      <div class="daydreaming">
+                                          <p id="animate-tilt-preview" class="drift"></p>
+                                      </div>
+                                  </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <div id="jump-preview" style="display: none">
+                                      <p id="animate-jump-preview" class="content"></p>
+                                  </div>
+                                </div>
+                                <div class="col-md-4">
+                                  <p>last</p>
+                                </div>
+                            </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button class="btn" data-dismiss="modal">Close</button>
                         </div>
                     </div>
-
                 </div>
-            </div> <!-- End of modal-->
+            </div>
+
+
 
             <!-- Electrodermal data -->
             <div class="data-header">
@@ -133,6 +140,7 @@
                 <!-- <canvas id="chartContainer" style="height:200px; width:70%;"></canvas> -->
                 <canvas id="mycanvas" width="400" height="100"></canvas>
             </div>
+            <div class="activity"></div>
 
             <div id="data-inner">
                 <!--NEED TO IMPLEMENT SHARING CHECKBOX FUNCTION-->

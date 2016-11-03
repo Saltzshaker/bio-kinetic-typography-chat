@@ -43,6 +43,52 @@ $(function() {
 
     // Run the liveAnimate function
     liveAnimate();
+    GSRStatus();
+
+    // On click
+    $(document.body).on('mouseover','#messages li',function(evt){
+		// alert($(this).data("sharing"));
+		// var text = document.getElementById(this.id).innerText;
+		// if($(this).data("sharing") === "y") {
+      console.log(inf);
+			if(inf == "stressed"){
+        $(this).addClass("drift");
+			}
+			else if(inf == "chill"){
+        $(this).addClass("daydreaming");
+			}
+  // }
+	});
+
+  $( document ).ready(function() {
+    console.log("1");
+    if(inf == "stressed"){
+      $(".activity").append( "<p>Stress test</p>" );
+      console.log("2");
+    }
+    if(inf == "chill"){
+      $(".activity").append( "<p>Chill test</p>" );
+      console.log("3");
+    }
+  }
+
+  function test() {
+    console.log("test?");
+  }
+
+    $(document.body).on('mouseout','#messages li',function(evt){
+		// alert($(this).data("sharing"));
+		// var text = document.getElementById(this.id).innerText;
+		// if($(this).data("sharing") === "y") {
+      console.log("mouseout");
+			if(inf == "stressed"){
+        $(this).removeClass("drift");
+			}
+			else if(inf == "chill"){
+        $(this).removeClass("daydreaming");
+			}
+  // }
+	});
 
     // On click in animation library, swap out animateText
     $("#animate-tilt-preview").click(function() {
@@ -132,9 +178,7 @@ $(function() {
         if (inf === "stressed") {
             animateShake(message);
             $("#animate-shake-preview").addClass("selected-effect-border");
-
         }
-
 
         else if (inf === "chill") {
             animateSquash(message);
