@@ -29,7 +29,7 @@ $(function() {
         }
     });
 
-    // try to get live animations
+    // Add text animations to box as the user types
     function liveAnimate() {
         $('#m').keyup(function() {
             // the input being typed by the user
@@ -43,7 +43,7 @@ $(function() {
 
     // Run the liveAnimate function
     liveAnimate();
-    GSRStatus();
+    // GSRStatus();
 
     // On click
     $(document.body).on('mouseover','#messages li',function(evt){
@@ -53,24 +53,26 @@ $(function() {
       console.log(inf);
 			if(inf == "stressed"){
         $(this).addClass("drift");
+        // $(".activity").append( "<p>Stress test</p>" );
 			}
 			else if(inf == "chill"){
         $(this).addClass("daydreaming");
+        // $(".activity").append( "<p>Chill test</p>" );
 			}
   // }
 	});
 
-  $( document ).ready(function() {
-    console.log("1");
-    if(inf == "stressed"){
-      $(".activity").append( "<p>Stress test</p>" );
-      console.log("2");
-    }
-    if(inf == "chill"){
-      $(".activity").append( "<p>Chill test</p>" );
-      console.log("3");
-    }
-  }
+  // $( document ).ready(function() {
+  //   console.log("1");
+  //   if(inf == "stressed"){
+  //     $(".activity").append( "<p>Stress test</p>" );
+  //     console.log("2");
+  //   }
+  //   if(inf == "chill"){
+  //     $(".activity").append( "<p>Chill test</p>" );
+  //     console.log("3");
+  //   }
+  // });
 
   function test() {
     console.log("test?");
