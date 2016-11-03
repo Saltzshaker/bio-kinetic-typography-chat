@@ -39,7 +39,7 @@
     }
 }
 
-.thinking span:nth-child(2) {
+.thinking span {
     -webkit-transform-origin: top center;
     -webkit-animation-name: swing;
     -webkit-animation-duration: 0.5s;

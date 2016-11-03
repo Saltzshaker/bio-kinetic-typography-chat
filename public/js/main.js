@@ -49,7 +49,7 @@ $(function() {
     $(document.body).on('mouseover','#messages li',function(evt){
 		// alert($(this).data("sharing"));
 		// var text = document.getElementById(this.id).innerText;
-		// if($(this).data("sharing") === "y") {
+		  // if($(this).data("sharing") == "y") {
       console.log(inf);
 			if(inf == "stressed"){
         $(this).addClass("drift");
@@ -225,14 +225,14 @@ $(function() {
         clearAnimations();
         $('#animate-swing').find('span').remove();
         $('#swing').css('display', 'block');
-
-        var textArray = message.split("");
-        var prevLetters = "";
-        for (i = 0; i < textArray.length - 1; i++) {
-            prevLetters = prevLetters + textArray[i];
-        }
-        $('#animate-swing').append('<span>' + prevLetters + '</span>');
-        $('#animate-swing').append('<span>' + textArray[textArray.length - 1] + '</span>');
+        //
+        // var textArray = message.split("");
+        // var prevLetters = "";
+        // for (i = 0; i < textArray.length - 1; i++) {
+        //     prevLetters = prevLetters + textArray[i];
+        // }
+        // $('#animate-swing').append('<span>' + prevLetters + '</span>');
+        // $('#animate-swing').append('<span>' + textArray[textArray.length - 1] + '</span>');
     }
 
     // shakes back and forth quickly
