@@ -3,9 +3,10 @@
 
 <head>
     <title>Socket.IO chat</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
     <link rel="stylesheet" href="css/animation-style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.0-rc.2/Chart.js"></script>
     <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -19,11 +20,11 @@
 
     <section id="l" class="login-page">
 
-        <h1>What's your username?</h1>
+        <h1>Enter a username</h1>
 
         <div class="login-info">
             <input id="usernameInput" type="text" maxlength="14" autocomplete="off" />
-            <button name="submit" onclick="setUsername()">SUBMIT</button>
+            <button id="username-button" name="submit" onclick="setUsername()">submit</button>
         </div>
 
     </section>
@@ -37,83 +38,73 @@
         <!-- <label id="k-tab">+</label></a>
             </li>
         </ul> -->
-
         <div id="kp" class="kineticpage" style="display: -webkit-flex;">
-            <div class="text-animations">
-                <!-- animations that take up minimal space -->
-                <div class="static-animations">
-                    <div id="swing" style="display: none">
-                        <div id="animate-swing" class="t thinking"></div>
-                    </div>
-                    <div id="squash" style="display: none">
-                        <p id="animate-squash" class="sleepy"></p>
-                    </div>
-                    <div id="shake" style="display: none">
-                        <p id="animate-shake" class="shake"></p>
-                    </div>
-                </div>
-                <div class="mid-animations">
-                    <div id="gamma" style="display: none">
-                        <div id="animate-gamma" class="i inspired"></div>
-                    </div>
-                </div>
-                <!-- animations that take up more vertical space -->
-                <div class="up-animations">
+            <h2>Animation Preview</h2>
 
-                    <div id="jump" style="display: none">
-                        <p id="animate-jump" class="content"></p>
-                    </div>
-
-                    <div id="tilt" style="display: none">
-                        <div class="daydreaming">
-                            <p id="animate-tilt" class="drift"></p>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="text-animations">
+                        <!-- animations that take up minimal space -->
+                        <div class="static-animations">
+                            <p id="swing"></p>
+                            <p id="squash"></p>
+                            <p id="shake"></p>
                         </div>
+                        <!-- animations that take up more vertical space -->
+                        <div class="up-animations">
+                            <p id="bounce"></p>
+                            <p id="drift"></p>
+                            <p id="floating"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="row">
+                        <button type="button" class="btn btn-info btn-lg effect-btn" data-toggle="modal" data-target="#previewModal">Choose effect</button>
+                    </div>
+                    <div class="row">
+
+                        <!--NEED TO IMPLEMENT SHARING CHECKBOX FUNCTION-->
+                        <div id="sharing">
+                            <label>Sharing
+                              <input id="share-data" type="checkbox" checked="checked"/>
+                            </label>
+                        </div>
+
                     </div>
                 </div>
             </div>
             <!--  End text animations -->
 
             <!-- Trigger the modal with a button -->
-            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Choose effect</button>
-            <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+            <div id="previewModal" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h3>Text effects</h3>
+                            <h3>Choose a text animation</h3>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="static-animations">
                                     <div class="col-md-4">
-                                        <div id="swing-preview" style="display: none">
-                                            <div id="animate-swing-preview" class="t thinking"></div>
-                                        </div>
+                                      <p id="swing-preview"></p>
                                     </div>
                                     <div class="col-md-4">
-                                        <div id="squash-preview" style="display: none">
-                                            <p id="animate-squash-preview" class="sleepy"></p>
-                                        </div>
+                                      <p id="squash-preview"></p>
                                     </div>
                                     <div class="col-md-4">
-                                        <div id="shake-preview" style="display: none">
-                                            <p id="animate-shake-preview" class="shake"></p>
-                                        </div>
+                                      <p id="shake-preview"></p>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="up-animations">
                                     <div class="col-md-4">
-                                        <div id="tilt-preview" style="display: none">
-                                            <div class="daydreaming">
-                                                <p id="animate-tilt-preview" class="drift"></p>
-                                            </div>
-                                        </div>
+                                      <p id="bounce-preview"></p>
                                     </div>
                                     <div class="col-md-4">
-                                        <div id="jump-preview" style="display: none">
-                                            <p id="animate-jump-preview" class="content"></p>
-                                        </div>
+                                      <p id="floating-preview"></p>
                                     </div>
                                     <div class="col-md-4">
                                     </div>
@@ -131,36 +122,37 @@
 
             <!-- Electrodermal data -->
             <div class="data-header">
-                <h2 style="color:#fff">Electrodermal Activity</h2>
-                <span style="color:rgb(255, 0, 255)">Current activity</span>
-                <span style="color:rgb(91,192,222)">My baseline</span>
+                <h2>Electrodermal Activity</h2>
+                <div id="range_label">
+                    <span id="low_range">Low Range</span>
+                    <span id="high_range">High Range</span>
+                </div>
             </div>
             <div id="data">
                 <!-- <canvas id="chartContainer" style="height:200px; width:70%;"></canvas> -->
                 <canvas id="mycanvas" width="400" height="100"></canvas>
             </div>
-            <div class="activity"></div>
-
-            <div id="data-inner">
-              <!--NEED TO IMPLEMENT SHARING CHECKBOX FUNCTION-->
-              <div id="sharing">
-                  <label class="control control~~checkbox">Sharing
-                      <input id="share-data" type="checkbox" checked="checked"/>
-                      <div class="control__indicator"></div>
-                    </label>
-              </div>
+            <div class="data_labels">
+                <div id="current_label">
+                    <span>Current activity</span>
+                </div>
+                <div id="baseline_label">
+                    <span>My baseline</span>
+                </div>
             </div>
-        </div>
-        <!-- end kineticpage -->
 
+        </div>
         <div class="chatpage">
             <div class="messageContainer">
                 <ul id="messages"></ul>
             </div>
-            <form action="">
-                <input id="m" autocomplete="off" /><button>SEND</button>
+            <form id="chatbox" action="">
+                <input id="m" autocomplete="off" /><button>send</button>
             </form>
         </div>
+
+        <!-- end kineticpage -->
+
 
 
     </section>

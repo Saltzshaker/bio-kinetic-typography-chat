@@ -3,8 +3,12 @@ var inf;
 var gsr_index = 2;
 var gsr_baseline_index = 2;
 var edaBaseline;
+var numBaselineValues = 10;
+
 
 var smoothie = new SmoothieChart({
+    maxValue: .12,
+    minValue: 0,
     grid: {
         strokeStyle: 'rgb(125, 125, 125)',
         fillStyle: 'rgb(60, 60, 60)',
@@ -24,9 +28,12 @@ smoothie.streamTo(document.getElementById("mycanvas"));
 var line1 = new TimeSeries();
 var line2 = new TimeSeries();
 
+// Hide the EDA range status until data comes in
+$("#low_range").hide();
+$("#high_range").hide();
+
 /* Add a value from gsrData.txt to the linegraph
 Set influence based on EDA value
-
 */
 function plotGSRData() {
 
@@ -37,38 +44,33 @@ function plotGSRData() {
         edaBaseline = gsrarr[gsr_baseline_index];
         gsr_index++;
         gsr_baseline_index++
-        console.log(inf);
         // console.log("edaBaseline: " + edaBaseline + " gsr_baseline_index: " + gsr_baseline_index);
         // console.log("eda: " + eda + " gsr_index: " + gsr_index);
 
-        if (gsr_baseline_index > 181) {
-          gsr_baseline_index = 0;
+        if (gsr_baseline_index > numBaselineValues) {
+            gsr_baseline_index = 0;
         }
 
-        if (gsr_index > 181) {
-          line1.append(new Date().getTime(), eda);
+        if (gsr_index > 10) {
+            line1.append(new Date().getTime(), eda);
         }
 
         line2.append(new Date().getTime(), edaBaseline);
 
         if (eda > 0.097) {
+            // refactor as high maps to fast animation class in main.js
+            // when eda is high,
 
-            inf = "stressed";
-            var stressStatus = document.getElementById('stress_status');
-            if (stressStatus === null) {
-              $(".activity").append('<p id="stress_status" class="status">High range</p>');
-              $('#chill_status').remove();
-            } else {
-            }
-
+            inf = "high";
+            // change data range label
+            $("#high_range").show();
+            $('#low_range').hide();
         } else {
-            inf = "chill"
-            var chillStatus = document.getElementById('chill_status');
-            if (chillStatus === null) {
-              $(".activity").append('<p id="chill_status" class="status">Low range</p>');
-              $('#stress_status').remove();
-            } else {
-            }
+            // refactor so low influence maps to slow animation in main.js
+            inf = "low"
+            // change data range label
+            $("#low_range").show();
+            $('#high_range').hide();
         }
     });
 }
@@ -78,9 +80,9 @@ setInterval(plotGSRData, 1000);
 
 // Add to SmoothieChart
 smoothie.addTimeSeries(line1, {
-  strokeStyle: 'rgb(255, 0, 255)',
-  fillStyle: 'rgba(255, 0, 255, 0.3)',
-  lineWidth: 3
+    strokeStyle: 'rgb(255, 0, 255)',
+    fillStyle: 'rgba(255, 0, 255, 0.3)',
+    lineWidth: 3
 });
 
 smoothie.addTimeSeries(line2, {

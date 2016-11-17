@@ -4,14 +4,23 @@
 	box-sizing: border-box;
 }
 
+.divider {
+	color: white;
+}
+
 html,section{
 	height: 100%;
 }
 body {
 	height: 100%;
-  	font-family: Geneva, Tahoma, Verdana, sans-serif;
-  	font-size: .9rem;
+  	font-family: 'Work Sans', sans-serif;
+  	font-size: 1em;
   	line-height: 150%;
+		background-color: #eee;
+}
+
+p {
+	text-align: center;
 }
 
 .status {
@@ -22,24 +31,23 @@ body {
 /* login section */
 .login-page {
 	display: block;
-	margin: 0 auto;
-    margin-top: 200px;
-    margin-left: 2s00px;
-    width: 100%;
-    padding: 30px;
-    text-align: center;
+  width: 100%;
+  padding: 30px;
+	margin-top: 200px;
+  text-align: center;
 }
 
 .login-info {
 	padding: 30px;
 }
 
-.login-info input {
+	input {
 	border: 2px solid gray;
-    border-radius: 5px;
+  border-radius: 5px;
 	padding: 10px;
 	width: 25%;
 	margin-right: .5%;
+	font-size: 2em;
 }
 
 .login-info button {
@@ -47,11 +55,23 @@ body {
 	background: #2aa1c0;
 	border: none;
 	border-radius: 5px;
-	padding: 10px;
-	font-size: 12px;
+	padding: 16px;
+	font-size: 2em;
 	font-weight: bold;
-	font-family: Geneva, Tahoma, Verdana, sans-serif;
+	font-family: 'Work Sans', sans-serif;
 	color: white;
+}
+
+.effect-btn {
+	background: #2aa1c0;
+	border: none;
+	border-radius: 5px;
+	padding: 16px;
+	font-size: 2em;
+	font-weight: bold;
+	font-family: 'Work Sans', sans-serif;
+	color: white;
+	margin-top: 1em;
 }
 
 .login-info button:hover {background-color: #0e647d;}
@@ -72,42 +92,9 @@ ul.tab {
     width: 45px;
 }
 
-ul.tab li {
-	float: left;
-	width: 45px;
-	background-color: #2aa1c0;
-	border-top-right-radius: 1em;
-	border-bottom-right-radius: 1em;
-}
-
-ul.tab li a {
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: bold;
-	font-family: Arial, Helvetica, sans-serif;
-}
-
-ul.tab li a:hover {
-	background-color: #0e647d;
-	border-top-right-radius: 1em;
-	border-bottom-right-radius: 1em;
-	width: 45px;
-}
-
-ul.tab li a:focus, .active {
-	background-color: #2aa1c0;
-	border-top-right-radius: 1em;
-	border-bottom-right-radius: 1em;
-	width: 45px;
-}
-
 /* chat display area */
 .chatpage {
-  background-color: #f0f0f0;
+  background-color: #fff;
   -webkit-flex: 1;
   position:relative;
 }
@@ -127,6 +114,7 @@ ul.tab li a:focus, .active {
 #messages li {
 	padding: 10px 20px 10px 20px;
 	text-align: left;
+	font-size: 2em;
 }
 
 #messages li:hover{
@@ -145,7 +133,7 @@ form {
 
 form input {
 	border: 2px solid gray;
-    border-radius: 5px;
+  border-radius: 5px;
 	padding: 10px;
 	width: 90%;
 	margin-right: .5%;
@@ -157,9 +145,9 @@ form button {
 	border: none;
 	border-radius: 5px;
 	padding: 10px;
-	font-size: 12px;
+	font-size: 2em;
 	font-weight: bold;
-	font-family: 'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	font-family: 'Work Sans', sans-serif;
 	color: white;
 }
 
@@ -170,8 +158,8 @@ form button:focus, .active {background-color: #2aa1c0;}
 /* kinetic typography display area */
 .kineticpage {
     display: none;
-    color: black;
-    background-color: #333;
+    color: #333;
+    background-color: #eee;
   	-webkit-flex: 1;
   	padding: 3rem;
 
@@ -180,15 +168,17 @@ form button:focus, .active {background-color: #2aa1c0;}
 }
 
 .text-animations {
-	border: 1px solid gray;
+	border: .5px solid #D8D8D8;
 	background-color: white;
-	margin-top: 30px;
-	margin-bottom: 30px;
+	margin-top: 1em;
+	margin-bottom: 2em;
 	height: 200px;
 	width: 100%;
 	word-wrap: break-word;
 	overflow-y: scroll;
 	line-height: 250%;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
 }
 
 .text-animations-preview {
@@ -238,32 +228,48 @@ form button:focus, .active {background-color: #2aa1c0;}
 	margin-left: 20px;
 }
 
+.data_labels {
+	font-size: 1.5em;
+}
+
+#current_label {
+	border: rgb(255, 0, 255) solid 2px;
+	padding: .5em;
+	margin-top: 1em;
+	float: left;
+	margin-right: 1em;
+}
+
+#baseline_label {
+	border: rgb(91,192,222) solid 2px;
+	padding: .5em;
+	margin-top: 1em;
+	float: left;
+	margin-right: 1em;
+}
+
+#range_label {
+	background-color: rgb(91,91,91);
+	color: white;
+	padding: .5em;
+	margin-bottom: 1em;
+	margin-top: 1em;
+	text-align: center;
+	width: 20%;
+	margin-right: 1em;
+	font-size: 1.5em;
+}
+
 #sharing {
 	display: -webkit-flex;
 	-webkit-flex-direction: row;
-	margin-top: 20px;
-	background: white;
-	border-radius: 5px;
 	padding: 10px;
-	color: #0e647d;
 	word-wrap: break-word;
 }
 
 #share-data {
 	margin-right: 10px;
 
-}
-
-/* connect to Muse button */
-#connect {
-	margin-top: 20px;
-	border: none;
-	border-radius: 5px;
-	padding: 10px;
-	color: #0e647d;
-	background: white;
-	font-size: 12px;
-	font-weight: bold;
 }
 
 /* sharing checkbox */
