@@ -10,7 +10,7 @@
 */
 
 
-#bounce, #bounce-preview {
+#bounce, #bounce-preview, .bounce-li {
     -webkit-animation: bounce 0.4s infinite alternate;
     font-size: 2em;
     font-family: 'Work Sans', sans-serif;
@@ -27,7 +27,7 @@
 
 /* swing  animation */
 
-#swing, #swing-preview {
+#swing, #swing-preview, .swing-li {
   display: inline-block;
   -webkit-transform-origin: top center;
   -webkit-animation-name: swing;
@@ -54,7 +54,7 @@
 
 /* squash  animation */
 
-#squash, #squash-preview {
+#squash, #squash-preview, .squash-li {
     -webkit-animation-name: squash;
     -webkit-animation-duration: 4s;
     -webkit-animation-iteration-count: infinite;
@@ -79,7 +79,7 @@
 
 /* tilt  animation */
 
-#floating, #floating-preview {
+#floating, #floating-preview, .floating-li {
     display: inline-block;
     -webkit-animation-name: floating;
     -webkit-animation-duration: 10s;
@@ -90,7 +90,7 @@
     overflow: hidden;
 }
 
-#drift, #drift-preview {
+#drift, #drift-preview, .drift-li {
     display: inline-block;
     -webkit-animation-name: drift;
     -webkit-animation-duration: 20s;
@@ -143,6 +143,10 @@
     font-family: 'Work Sans', sans-serif;
     display: none;
     overflow: hidden;
+}
+
+#shake, #bounce, #floating, #squash, #swing {
+  margin-top: 20%;
 }
 
 @-webkit-keyframes shake {

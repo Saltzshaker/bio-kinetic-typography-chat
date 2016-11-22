@@ -265,6 +265,7 @@ form button:focus, .active {background-color: #2aa1c0;}
 	-webkit-flex-direction: row;
 	padding: 10px;
 	word-wrap: break-word;
+	font-size: 1.5em;
 }
 
 #share-data {

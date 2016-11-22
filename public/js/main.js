@@ -17,7 +17,7 @@ $(function() {
     // when form is submitted, add the message
     $('form').submit(function() {
         socket.emit('chat message', $('#m').val());
-        $('#m').val('');
+        message = $('#m').val('');
         return false;
     });
 
@@ -68,13 +68,9 @@ $(function() {
 		// alert($(this).data("sharing"));
 		// var text = document.getElementById(this.id).innerText;
 		  // if($(this).data("sharing") == "y") {
-        $(this).addClass("shake-li").css('display', 'block');
+        // $(this).addClass("shake-li").css('display', 'block');
         console.log("mouseover");
 
-        var liCurrent = $('.li').eq(index);
-        $(this).attr('id'+index);
-        console.log(this);
-        index++;
   // }
 	});
 
@@ -134,12 +130,60 @@ $(function() {
 
     socket.on('chat message', function(msg) {
         var myMessage = $('#messages');
-        myMessage.append($('<li>').attr("id", a).attr("class", share).data("sharing", share).text(msg));
+        myMessage.append($('<li>').attr("id", "li" + a).attr("class", share).data("sharing", share).text(msg));
         myMessage.scrollTop(myMessage.prop('scrollHeight'));
+
+
+
+        // $('#0').addClass("shake-li").css('display', 'block');
+        // $('#1').addClass("squash-li").css('display', 'block');
+        // $('#2').addClass("swing-li").css('display', 'block');
+        // $('#3').addClass("bounce-li").css('display', 'block');
+        // $('#li' + a).addClass("shake-li").css('display', 'block');
+
+        //increment li id value
+        var shakeLi = $('#li' + a).addClass("shake-li").css('display', 'block');
+        var swingLi = $('#li' + a).addClass("swing-li").css('display', 'block');
+        var bounceLi = $('#li' + a).addClass("bounce-li").css('display', 'block');
+        var floatingLi = $('#li' + a).addClass("floating-li").css('display', 'block');
+        var squashLi = $('#li' + a).addClass("squash-li").css('display', 'block');
+
+        a++
+
+        console.log("a: " + a);
+        console.log("effect: " + effect);
+        console.log("jquery: " + $('#' + a));
         // assign animation to the message
-        animatePreview(removeName(msg));
-        // start with shake animation as default
-        animateShake(removeName(msg));
+        if (effect == undefined){
+          shakeLi;
+          if (inf == "low") {
+            document.getElementById("shake-li").style.animationDuration = "10s";
+          }
+          else {
+            document.getElementById("shake-li").style.animationDuration = ".8s";
+          }
+          console.log("undefined");
+        }
+        else if (effect == "swing") {
+          swingLi;
+          console.log("swing!");
+        }
+        else if (effect == "bounce") {
+          bounceLi;
+          console.log("bounce!");
+        }
+        else if (effect == "floating") {
+          floatingLi;
+          console.log("floating!");
+        }
+        else if (effect == "shake") {
+          shakeLi;
+          console.log("shaking!");
+        }
+        else if (effect == "squash") {
+          squashLi;
+          console.log("squashing!");
+        }
     });
 
     $("button[name='submit']").click(setUsername);
@@ -159,11 +203,11 @@ $(function() {
         return txt;
     }
 
-		// Animate text in main animation box
-		$('#previewModal').on('hidden.bs.modal', function() {
-			$("#animate-squash-preview").removeClass("selected-effect-border");
-			$("#animate-shake-preview").removeClass("selected-effect-border");
-		});
+		// // Animate text in main animation box
+		// $('#previewModal').on('hidden.bs.modal', function() {
+		// 	$("#animate-squash-preview").removeClass("selected-effect-border");
+		// 	$("#animate-shake-preview").removeClass("selected-effect-border");
+		// });
 
     // animate all text effects in preview box
     function animatePreview(message) {
