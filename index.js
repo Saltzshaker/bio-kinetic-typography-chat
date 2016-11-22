@@ -1,3 +1,5 @@
+// server
+
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -25,5 +27,7 @@ io.on('connection', function(socket){
   socket.on('add user', function(name){
     socket.username = name;
   });
+
+  socket.on('disconnect', () => console.log('a user disconnected'));
 
 });
