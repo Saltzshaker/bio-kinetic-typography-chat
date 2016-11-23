@@ -104,9 +104,9 @@ function getBaselineAvg() {
 
             eda = gsrarr[i];
             total += eda;
-            console.log("avg: " + avg);
-            console.log("eda: " + eda);
-            console.log("total: " + total);
+            // console.log("avg: " + avg);
+            // console.log("eda: " + eda);
+            // console.log("total: " + total);
             i++;
 
             if (i == numBaselineValues) {

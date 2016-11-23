@@ -133,57 +133,53 @@ $(function() {
         myMessage.append($('<li>').attr("id", "li" + a).attr("class", share).data("sharing", share).text(msg));
         myMessage.scrollTop(myMessage.prop('scrollHeight'));
 
-
-
-        // $('#0').addClass("shake-li").css('display', 'block');
-        // $('#1').addClass("squash-li").css('display', 'block');
-        // $('#2').addClass("swing-li").css('display', 'block');
-        // $('#3').addClass("bounce-li").css('display', 'block');
-        // $('#li' + a).addClass("shake-li").css('display', 'block');
-
         //increment li id value
-        var shakeLi = $('#li' + a).addClass("shake-li").css('display', 'block');
-        var swingLi = $('#li' + a).addClass("swing-li").css('display', 'block');
-        var bounceLi = $('#li' + a).addClass("bounce-li").css('display', 'block');
-        var floatingLi = $('#li' + a).addClass("floating-li").css('display', 'block');
-        var squashLi = $('#li' + a).addClass("squash-li").css('display', 'block');
+        // var shakeLi = $('#li' + a).addClass("shake-li").css('display', 'block');
+        // var swingLi = $('#li' + a).addClass("swing-li").css('display', 'block');
+        // var bounceLi = $('#li' + a).addClass("bounce-li").css('display', 'block');
+        // var floatingLi = $('#li' + a).addClass("floating-li").css('display', 'block');
+        // var squashLi = $('#li' + a).addClass("squash-li").css('display', 'block');
 
-        a++
 
-        console.log("a: " + a);
-        console.log("effect: " + effect);
-        console.log("jquery: " + $('#' + a));
+        // $('#li' + a).addClass("shake-li").css('display', 'block');
         // assign animation to the message
         if (effect == undefined){
-          shakeLi;
-          if (inf == "low") {
-            document.getElementById("shake-li").style.animationDuration = "10s";
-          }
-          else {
-            document.getElementById("shake-li").style.animationDuration = ".8s";
-          }
-          console.log("undefined");
+          var currentLi = ("#li" + a).toString();
+          console.log("currentLi in if: " + currentLi);
+          $(currentLi).addClass("shake-li").css('display', 'block');
+          a++;
         }
+
         else if (effect == "swing") {
-          swingLi;
+          $('#li' + a).addClass("swing-li").css('display', 'block');
+          a++;
           console.log("swing!");
         }
+
         else if (effect == "bounce") {
-          bounceLi;
+          bounceLi = $('#li' + a).addClass("bounce-li").css('display', 'block');
+          a++;
           console.log("bounce!");
         }
+
         else if (effect == "floating") {
-          floatingLi;
+          floatingLi = $('#li' + a).addClass("floating-li").css('display', 'block');
+          a++;
           console.log("floating!");
         }
+
         else if (effect == "shake") {
-          shakeLi;
+          $(currentLi).addClass("shake-li").css('display', 'block');
+          a++;
           console.log("shaking!");
         }
+
         else if (effect == "squash") {
-          squashLi;
+          squashLi = $('#li' + a).addClass("squash-li").css('display', 'block');
+          a++;
           console.log("squashing!");
         }
+        a++;
     });
 
     $("button[name='submit']").click(setUsername);
