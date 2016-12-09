@@ -8,6 +8,7 @@ var effect = "shake";
 var sharingOn = true;
 var currentEffect;
 
+
 $(function() {
 
     /*------------------------------------------------------------------------------
@@ -23,10 +24,11 @@ $(function() {
                                       Socket
     ------------------------------------------------------------------------------*/
 
+
     /*----------
     On chat message, append unique li with index and add current effect to play once
     ----------*/
-    socket.on('chat message', function(msg) {
+  function addOnMsg() {
         var myMessage = $('#messages');
         myMessage.append($('<li>').attr("id", "li" + a).attr("class", sharingOn + "-sharing").data("sharing", sharingOn).text(msg));
         myMessage.scrollTop(myMessage.prop('scrollHeight'));
@@ -41,9 +43,8 @@ $(function() {
             $('#li' + a).append($('<span>').attr("class", "glyphicon glyphicon-ok-sign"));
             getAnimationSpeed();
         }
-
         a++;
-    });
+    }
 
     /*----------
     Sets the client's username and emit to other user
@@ -59,10 +60,54 @@ $(function() {
     When chat form is submitted, add the message and emit to other user
     ----------*/
     $('form').submit(function() {
-        socket.emit('chat message', $('#m').val());
+        var sendMsg = {hello: 'world'};
+        socket.emit('chat message', sendMsg);
+        console.log(sendMsg);
+
+
         message = $('#m').val('');
         return false;
     });
+
+    // gets msg info from p1
+    socket.on('send to p2', function(msg) {
+        console.log(msg);
+        var sentTxt = msg["txt"];
+        var sentShare = msg["sharingOn"];
+        var sentLi = msg["li_id"];
+        var sentSpeed = msg["speed"];
+        var sentEffect = msg["effect"];
+        var myMessage = $('#messages');
+        myMessage.append($('<li>').attr("id", sentLi).attr("class", sentShare + "-sharing").data("sharing", sentShare).text(sentTxt));
+        myMessage.scrollTop(myMessage.prop('scrollHeight'));
+
+        if (sentEffect == null && sharingOn) {
+            $(sentLi).css('-webkit-animation-iteration-count', "1");
+            $(sentLi).append($('<span>').attr("class", "glyphicon glyphicon-ok-sign"));
+            $('#li' + a).css('animationDuration', sentSpeed);
+
+        } else if (sharingOn) {
+            $(sentLi).addClass(sentEffect + "-li").css('display', 'block');
+            $(sentLi).css('-webkit-animation-iteration-count', "1");
+            $(sentLi).append($('<span>').attr("class", "glyphicon glyphicon-ok-sign"));
+            sentSpeed;
+        }
+          $('#li' + a).css('animationDuration', sentSpeed);
+    });
+
+    function createMsg () {
+    // get json of li effect class, id, speed, sharing, text
+      var msg = {
+      "txt": $('#m').val(),
+      "sharingOn": sharingOn,
+      "li_id": "li" + a,
+      "speed": getAnimationSpeed(),
+      "effect": effect
+      }
+      a++;
+      return msg;
+  }
+
 
     /*------------------------------------------------------------------------------
                                 jQuery event handlers
@@ -150,57 +195,52 @@ $(function() {
         animateSquash(removeName(input));
     });
 
-      socket.on('effect click', function(effect) {
-      });
-
-      socket.emit('effect click', effect + console.log("sent effect"));
-
-
-
     /*------------------------------------------------------------------------------
                                 JS METHODS
     ------------------------------------------------------------------------------*/
     function getAnimationSpeed() {
-      console.log("hello there");
+      var speed;
+
         if (effect == 'bounce') {
             if (inf == 'low') {
-                $('#li' + a).css('animationDuration', '2s');
+                speed = '2s';
             } else {
-                $('#li' + a).css('animationDuration', '.3s');
+                speed = '.3s';
             }
         }
 
         if (effect == 'swing') {
             if (inf == 'low') {
-                $('#li' + a).css('animationDuration', '1s');
+              speed = '1s';
             } else {
-                $('#li' + a).css('animationDuration', '.3s');
+              speed = '.3s';
             }
         }
         if (effect == 'squash') {
             if (inf == 'low') {
-                $('#li' + a).css('animationDuration', '3s');
+              speed = '3s';
             } else {
-                $('#li' + a).css('animationDuration', '1s');
+              speed = '1s';
             }
         }
 
         if (effect == 'floating') {
             if (inf == 'low') {
-                $('#li' + a).css('animationDuration', '10s');
+                speed = '10s';
             } else {
-                $('#li' + a).css('animationDuration', '.3s');
+                speed = '.3s';
             }
         }
 
         if (effect == 'shake' || effect == null) {
             console.log("inside animate speed");
             if (inf == 'low') {
-                $('#li' + a).css('animationDuration', '10s');
+                speed = '10s';
             } else {
-                $('#li' + a).css('animationDuration', '.8s');
+                speed = '.8s';
             }
         }
+        return speed;
     }
 
     /*----------
