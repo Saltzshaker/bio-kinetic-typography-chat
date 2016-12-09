@@ -60,12 +60,8 @@ $(function() {
     When chat form is submitted, add the message and emit to other user
     ----------*/
     $('form').submit(function() {
-        var sendMsg = {hello: 'world'};
+        var sendMsg = createMsg();
         socket.emit('chat message', sendMsg);
-        console.log(sendMsg);
-
-
-        message = $('#m').val('');
         return false;
     });
 
@@ -81,18 +77,20 @@ $(function() {
         myMessage.append($('<li>').attr("id", sentLi).attr("class", sentShare + "-sharing").data("sharing", sentShare).text(sentTxt));
         myMessage.scrollTop(myMessage.prop('scrollHeight'));
 
-        if (sentEffect == null && sharingOn) {
-            $(sentLi).css('-webkit-animation-iteration-count', "1");
-            $(sentLi).append($('<span>').attr("class", "glyphicon glyphicon-ok-sign"));
-            $('#li' + a).css('animationDuration', sentSpeed);
+        if (sentEffect == null && sentShare) {
+            $('#' + sentLi).css('-webkit-animation-iteration-count', "1");
+            $('#' + sentLi).append($('<span>').attr("class", "glyphicon glyphicon-ok-sign"));
+            $('#' + sentLi).css('animationDuration', sentSpeed);
 
-        } else if (sharingOn) {
-            $(sentLi).addClass(sentEffect + "-li").css('display', 'block');
-            $(sentLi).css('-webkit-animation-iteration-count', "1");
-            $(sentLi).append($('<span>').attr("class", "glyphicon glyphicon-ok-sign"));
+        } else if (sentShare) {
+            console.log('sharing');
+            $('#' + sentLi).addClass(sentEffect + "-li").css('display', 'block');
+            $('#' + sentLi).css('-webkit-animation-iteration-count', "1");
+            $('#' + sentLi).append($('<span>').attr("class", "glyphicon glyphicon-ok-sign"));
             sentSpeed;
         }
-          $('#li' + a).css('animationDuration', sentSpeed);
+        $('#' + sentLi).css('animationDuration', sentSpeed);
+        a++;
     });
 
     function createMsg () {
