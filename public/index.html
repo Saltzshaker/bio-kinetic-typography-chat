@@ -61,15 +61,13 @@
 
                 <div class="col-md-2">
                     <div class="row">
-                        <button type="button" class="btn btn-info btn-lg effect-btn" data-toggle="modal" data-target="#previewModal">Choose effect</button>
+                        <button type="button" class="btn btn-info btn-lg" id="effect-btn" data-toggle="modal" data-target="#previewModal">Choose effect</button>
                     </div>
                     <div class="row">
 
-                        <!--NEED TO IMPLEMENT SHARING CHECKBOX FUNCTION-->
                         <div id="sharing">
-                            <label>Sharing
-                              <input id="share-data" type="checkbox" checked="checked"/>
-                            </label>
+                            <label>Share effect</label>
+                            <input id="share-data" type="checkbox" checked="checked"/>
                         </div>
 
                     </div>
@@ -123,9 +121,13 @@
             <!-- Electrodermal data -->
             <div class="data-header">
                 <h2>Electrodermal Activity</h2>
+                <div id="baseline_status">
+                  <span id="calculating_baseline">Calculating baseline</span>
+                  <span id="baseline_calculated">Baseline calculated</span>
+                </div>
                 <div id="range_label">
-                    <span id="low_range">Low Range</span>
-                    <span id="high_range">High Range</span>
+                    <span id="low_range">Below baseline</span>
+                    <span id="high_range">Above baseline</span>
                 </div>
             </div>
             <div id="data">

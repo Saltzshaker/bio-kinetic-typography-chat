@@ -1,97 +1,117 @@
-// current EDA
-var e;
-var gsrarr;
-var gsr_index = 0;
+// connect to socket
 var socket = io.connect();
+// chat message input
 var input;
+// increment a to get chat message li index
 var a = 0;
-var effect;
-var index = 0;
+var effect = "shake";
+var sharingOn = true;
+var currentEffect;
 
-// define empty animation array with animation object
 $(function() {
-    var share = "y";
-    var gsrarr = [];
-    var eda = 0;
 
-    // when form is submitted, add the message
+    /*------------------------------------------------------------------------------
+                                  Function calls
+    ------------------------------------------------------------------------------*/
+
+    /*----------
+    Animate main div and preview text as a user types with animatePreview() and conditionals based on effect
+    ----------*/
+    liveAnimate();
+
+    /*------------------------------------------------------------------------------
+                                      Socket
+    ------------------------------------------------------------------------------*/
+
+    /*----------
+    On chat message, append unique li with index and add current effect to play once
+    ----------*/
+    socket.on('chat message', function(msg) {
+        var myMessage = $('#messages');
+        myMessage.append($('<li>').attr("id", "li" + a).attr("class", sharingOn + "-sharing").data("sharing", sharingOn).text(msg));
+        myMessage.scrollTop(myMessage.prop('scrollHeight'));
+
+        if (effect == null && sharingOn) {
+            $('#li' + a).css('-webkit-animation-iteration-count', "1");
+            $('#li' + a).append($('<span>').attr("class", "glyphicon glyphicon-ok-sign"));
+            getAnimationSpeed();
+        } else if (sharingOn) {
+            $('#li' + a).addClass(effect + "-li").css('display', 'block');
+            $('#li' + a).css('-webkit-animation-iteration-count', "1");
+            $('#li' + a).append($('<span>').attr("class", "glyphicon glyphicon-ok-sign"));
+            getAnimationSpeed();
+        }
+
+        a++;
+    });
+
+    /*----------
+    Sets the client's username and emit to other user
+    ----------*/
+    function setUsername() {
+        var name = document.getElementById('usernameInput').value;
+        socket.emit('add user', name);
+        document.getElementById("l").style.display = "none";
+        document.getElementById("c").style.display = "-webkit-flex";
+    }
+
+    /*----------
+    When chat form is submitted, add the message and emit to other user
+    ----------*/
     $('form').submit(function() {
         socket.emit('chat message', $('#m').val());
         message = $('#m').val('');
         return false;
     });
 
-    //IMPLEMENT option to share your animation with chat users
-    $('#share-data').change(function() {
-        if ($(this).is(":checked")) {
-            //share with both users
-            share = "y";
-        } else {
-            share = "n";
+    /*------------------------------------------------------------------------------
+                                jQuery event handlers
+    ------------------------------------------------------------------------------*/
+
+    /*----------
+    Checkbox
+    ----------*/
+    $('#share-data').click(function() {
+        if($(this).is(':checked')) {
+            sharingOn = true;
+        }
+        else {
+            sharingOn = false;
         }
     });
 
-    // Add text animations to box as the user types
-    function liveAnimate() {
-        $('#m').keyup(function() {
-            // the input being typed by the user
-            input = $('#m').val();
+    /*----------
+    Mousing over and out chat messages
+    ----------*/
+    $(document.body).on('mouseover', '#messages li', function(evt) {
+        $(this).css('-webkit-animation-iteration-count', "infinite");
+    });
 
-            // assign animation to the message influence determined by plotGSRData() in linegraph.js
-            animatePreview(removeName(input));
-            if (effect == null){
-              animateShake(removeName(input));
-            }
-            else if (effect == "swing") {
-              animateSwing(removeName(input));
-            }
-            else if (effect == "bounce") {
-              animateBounce(removeName(input));
-            }
-            else if (effect == "floating") {
-              animateFloating(removeName(input));
-            }
-            else if (effect == "shake") {
-              animateShake(removeName(input));
-            }
-            else if (effect == "squash") {
-              animateSquash(removeName(input));
-            }
-        });
-    }
+    $(document.body).on('mouseout', '#messages li', function(evt) {
+        $(this).css('-webkit-animation-iteration-count', "0");
+        console.log("mouseout");
+    });
 
-    // Run the liveAnimate function
-    liveAnimate();
+    /*----------
+    On submit click, set username
+    ----------*/
+    $("button[name='submit']").click(setUsername);
 
-    // On click
-    $(document.body).on('mouseover','#messages li',function(evt){
-		// alert($(this).data("sharing"));
-		// var text = document.getElementById(this.id).innerText;
-		  // if($(this).data("sharing") == "y") {
-        // $(this).addClass("shake-li").css('display', 'block');
-        console.log("mouseover");
+    /*----------
+    Add border to current effect selected in effect library
+    ----------*/
 
-  // }
-	});
+    $("#effect-btn").click(function() {
+      currentEffect = effect + "-preview";
+      $("#" + currentEffect).addClass("selected-effect-border");
+      console.log(currentEffect);
+    });
 
-    $(document.body).on('mouseout','#messages li',function(evt){
-		// alert($(this).data("sharing"));
-		// var text = document.getElementById(this.id).innerText;
-		// if($(this).data("sharing") === "y") {
-      console.log("mouseout");
-			if(inf == "high"){
-        $(this).removeClass("shake");
-			}
-			else if(inf == "low"){
-        $(this).removeClass("squash");
-			}
-  // }
-	});
-
-
-//////////// On click in animation library, swap out animateText ////////////
-
+    /*----------
+    On click in effect library, close modal and set new animation effect in main div
+    ----------*/
     $("#floating-preview").click(function() {
+        $("#" + currentEffect).removeClass("selected-effect-border");
         effect = "floating";
         $('#previewModal').modal('toggle');
         input = $('#m').val();
@@ -99,6 +119,7 @@ $(function() {
     });
 
     $("#swing-preview").click(function() {
+        $("#" + currentEffect).removeClass("selected-effect-border");
         effect = "swing";
         $('#previewModal').modal('toggle');
         input = $('#m').val();
@@ -106,6 +127,7 @@ $(function() {
     });
 
     $("#bounce-preview").click(function() {
+        $("#" + currentEffect).removeClass("selected-effect-border");
         effect = "bounce";
         $('#previewModal').modal('toggle');
         input = $('#m').val();
@@ -113,6 +135,7 @@ $(function() {
     });
 
     $("#shake-preview").click(function() {
+        $("#" + currentEffect).removeClass("selected-effect-border");
         effect = "shake";
         $('#previewModal').modal('toggle');
         input = $('#m').val();
@@ -120,92 +143,88 @@ $(function() {
     });
 
     $("#squash-preview").click(function() {
+        $("#" + currentEffect).removeClass("selected-effect-border");
         effect = "squash";
         $('#previewModal').modal('toggle');
         input = $('#m').val();
         animateSquash(removeName(input));
     });
 
-    // To do: When chat message is sent, if sharing is on, add animation to chat window
+      socket.on('effect click', function(effect) {
+      });
 
-    socket.on('chat message', function(msg) {
-        var myMessage = $('#messages');
-        myMessage.append($('<li>').attr("id", "li" + a).attr("class", share).data("sharing", share).text(msg));
-        myMessage.scrollTop(myMessage.prop('scrollHeight'));
-
-        //increment li id value
-        // var shakeLi = $('#li' + a).addClass("shake-li").css('display', 'block');
-        // var swingLi = $('#li' + a).addClass("swing-li").css('display', 'block');
-        // var bounceLi = $('#li' + a).addClass("bounce-li").css('display', 'block');
-        // var floatingLi = $('#li' + a).addClass("floating-li").css('display', 'block');
-        // var squashLi = $('#li' + a).addClass("squash-li").css('display', 'block');
+      socket.emit('effect click', effect + console.log("sent effect"));
 
 
-        // $('#li' + a).addClass("shake-li").css('display', 'block');
-        // assign animation to the message
-        if (effect == undefined){
-          var currentLi = ("#li" + a).toString();
-          console.log("currentLi in if: " + currentLi);
-          $(currentLi).addClass("shake-li").css('display', 'block');
-          a++;
+
+    /*------------------------------------------------------------------------------
+                                JS METHODS
+    ------------------------------------------------------------------------------*/
+    function getAnimationSpeed() {
+      console.log("hello there");
+        if (effect == 'bounce') {
+            if (inf == 'low') {
+                $('#li' + a).css('animationDuration', '2s');
+            } else {
+                $('#li' + a).css('animationDuration', '.3s');
+            }
         }
 
-        else if (effect == "swing") {
-          $('#li' + a).addClass("swing-li").css('display', 'block');
-          a++;
-          console.log("swing!");
+        if (effect == 'swing') {
+            if (inf == 'low') {
+                $('#li' + a).css('animationDuration', '1s');
+            } else {
+                $('#li' + a).css('animationDuration', '.3s');
+            }
+        }
+        if (effect == 'squash') {
+            if (inf == 'low') {
+                $('#li' + a).css('animationDuration', '3s');
+            } else {
+                $('#li' + a).css('animationDuration', '1s');
+            }
         }
 
-        else if (effect == "bounce") {
-          bounceLi = $('#li' + a).addClass("bounce-li").css('display', 'block');
-          a++;
-          console.log("bounce!");
+        if (effect == 'floating') {
+            if (inf == 'low') {
+                $('#li' + a).css('animationDuration', '10s');
+            } else {
+                $('#li' + a).css('animationDuration', '.3s');
+            }
         }
 
-        else if (effect == "floating") {
-          floatingLi = $('#li' + a).addClass("floating-li").css('display', 'block');
-          a++;
-          console.log("floating!");
+        if (effect == 'shake' || effect == null) {
+            console.log("inside animate speed");
+            if (inf == 'low') {
+                $('#li' + a).css('animationDuration', '10s');
+            } else {
+                $('#li' + a).css('animationDuration', '.8s');
+            }
         }
-
-        else if (effect == "shake") {
-          $(currentLi).addClass("shake-li").css('display', 'block');
-          a++;
-          console.log("shaking!");
-        }
-
-        else if (effect == "squash") {
-          squashLi = $('#li' + a).addClass("squash-li").css('display', 'block');
-          a++;
-          console.log("squashing!");
-        }
-        a++;
-    });
-
-    $("button[name='submit']").click(setUsername);
-
-    // Sets the client's username
-    function setUsername() {
-        var name = document.getElementById('usernameInput').value;
-        socket.emit('add user', name);
-        document.getElementById("l").style.display = "none";
-        document.getElementById("c").style.display = "-webkit-flex";
-        // startSending();
     }
 
-    //remove the username from the chat message
+    /*----------
+    Remove the username from the chat message
+    ----------*/
     function removeName(txt) {
         txt = txt.replace(/^.*?:/, "");
         return txt;
     }
 
-		// // Animate text in main animation box
-		// $('#previewModal').on('hidden.bs.modal', function() {
-		// 	$("#animate-squash-preview").removeClass("selected-effect-border");
-		// 	$("#animate-shake-preview").removeClass("selected-effect-border");
-		// });
+    /*----------
+    Clear animations
+    ----------*/
+    function clearAnimations() {
+        $('#bounce').css('display', 'none');
+        $('#swing').css('display', 'none');
+        $('#squash').css('display', 'none');
+        $('#floating').css('display', 'none');
+        $('#shake').css('display', 'none');
+    }
 
-    // animate all text effects in preview box
+    /*----------
+    Apply all preview animations to effect library
+    ----------*/
     function animatePreview(message) {
         shakePreview(message);
         bouncePreview(message);
@@ -214,7 +233,37 @@ $(function() {
         floatingPreview(message);
     }
 
-//////////// Animate in main preview div ////////////
+    /*----------
+    Add text animations to box as the user types
+    ----------*/
+    function liveAnimate() {
+        $('#m').keyup(function() {
+            // the input being typed by the user
+            input = $('#m').val();
+
+            // assign animation to the message influence determined by plotGSRData() in linegraph.js
+            animatePreview(removeName(input));
+            console.log(effect);
+            if (effect == null) {
+                animateShake(removeName(input));
+            } else if (effect == "swing") {
+                animateSwing(removeName(input));
+            } else if (effect == "bounce") {
+                animateBounce(removeName(input));
+            } else if (effect == "floating") {
+                animateFloating(removeName(input));
+            } else if (effect == "shake") {
+                animateShake(removeName(input));
+            } else if (effect == "squash") {
+                animateSquash(removeName(input));
+            }
+
+        });
+    }
+
+    /*----------
+    Display animation CSS in main div for all effects
+    ----------*/
 
     // bounces up and down
     function animateBounce(message) {
@@ -222,10 +271,9 @@ $(function() {
         $('#bounce').css('display', 'block');
 
         if (inf == "low") {
-          document.getElementById("bounce").style.animationDuration = "2s";
-        }
-        else {
-          document.getElementById("bounce").style.animationDuration = ".3s";
+            document.getElementById("bounce").style.animationDuration = "2s";
+        } else {
+            document.getElementById("bounce").style.animationDuration = ".3s";
         }
 
         document.getElementById('bounce').innerHTML = message;
@@ -238,10 +286,9 @@ $(function() {
         $('#swing').css('display', 'block');
 
         if (inf == "low") {
-          document.getElementById("swing").style.animationDuration = "1s";
-        }
-        else {
-          document.getElementById("swing").style.animationDuration = ".3s";
+            document.getElementById("swing").style.animationDuration = "1s";
+        } else {
+            document.getElementById("swing").style.animationDuration = ".3s";
         }
 
         document.getElementById('swing').innerHTML = message;
@@ -253,10 +300,9 @@ $(function() {
         $('#shake').css('display', 'block');
 
         if (inf == "low") {
-          document.getElementById("shake").style.animationDuration = "10s";
-        }
-        else {
-          document.getElementById("shake").style.animationDuration = ".8s";
+            document.getElementById("shake").style.animationDuration = "10s";
+        } else {
+            document.getElementById("shake").style.animationDuration = ".8s";
         }
 
         document.getElementById('shake').innerHTML = message;
@@ -268,10 +314,9 @@ $(function() {
         $('#squash').css('display', 'block');
         console.log("squash inf: " + inf);
         if (inf == "low") {
-          document.getElementById("squash").style.animationDuration = "3s";
-        }
-        else {
-          document.getElementById("squash").style.animationDuration = "1s";
+            document.getElementById("squash").style.animationDuration = "3s";
+        } else {
+            document.getElementById("squash").style.animationDuration = "1s";
         }
 
         document.getElementById('squash').innerHTML = message;
@@ -283,26 +328,26 @@ $(function() {
         $('#floating').css('display', 'block');
 
         if (inf == "low") {
-          document.getElementById("floating").style.animationDuration = "10s";
-        }
-        else {
-          document.getElementById("floating").style.animationDuration = ".3s";
+            document.getElementById("floating").style.animationDuration = "10s";
+        } else {
+            document.getElementById("floating").style.animationDuration = ".3s";
         }
 
         document.getElementById('floating').innerHTML = message;
     }
 
-//////////// Animate in effect library ////////////
+    /*----------
+    Display animation CSS in effect library for all effects
+    ----------*/
 
     // bounces up and down
     function bouncePreview(message) {
         $('#bounce-preview').css('display', 'block');
 
         if (inf == "low") {
-          document.getElementById("bounce-preview").style.animationDuration = "2s";
-        }
-        else {
-          document.getElementById("bounce-preview").style.animationDuration = ".3s";
+            document.getElementById("bounce-preview").style.animationDuration = "2s";
+        } else {
+            document.getElementById("bounce-preview").style.animationDuration = ".3s";
         }
 
         document.getElementById('bounce-preview').innerHTML = message;
@@ -314,10 +359,9 @@ $(function() {
         $('#swing-preview').css('display', 'block');
 
         if (inf == "low") {
-          document.getElementById("swing-preview").style.animationDuration = "1s";
-        }
-        else {
-          document.getElementById("swing-preview").style.animationDuration = ".3s";
+            document.getElementById("swing-preview").style.animationDuration = "1s";
+        } else {
+            document.getElementById("swing-preview").style.animationDuration = ".3s";
         }
 
         document.getElementById('swing-preview').innerHTML = message;
@@ -328,10 +372,9 @@ $(function() {
         $('#shake-preview').css('display', 'block');
 
         if (inf == "low") {
-          document.getElementById("shake-preview").style.animationDuration = "10s";
-        }
-        else {
-          document.getElementById("shake-preview").style.animationDuration = ".8s";
+            document.getElementById("shake-preview").style.animationDuration = "10s";
+        } else {
+            document.getElementById("shake-preview").style.animationDuration = ".8s";
         }
 
         document.getElementById('shake-preview').innerHTML = message;
@@ -342,10 +385,9 @@ $(function() {
         $('#squash-preview').css('display', 'block');
 
         if (inf == "low") {
-          document.getElementById("squash-preview").style.animationDuration = "3s";
-        }
-        else {
-          document.getElementById("squash-preview").style.animationDuration = "1s";
+            document.getElementById("squash-preview").style.animationDuration = "3s";
+        } else {
+            document.getElementById("squash-preview").style.animationDuration = "1s";
         }
 
         document.getElementById('squash-preview').innerHTML = message;
@@ -356,23 +398,12 @@ $(function() {
         $('#floating-preview').css('display', 'block');
 
         if (inf == "low") {
-          document.getElementById("floating-preview").style.animationDuration = "10s";
-        }
-        else {
-          document.getElementById("floating-preview").style.animationDuration = ".3s";
+            document.getElementById("floating-preview").style.animationDuration = "10s";
+        } else {
+            document.getElementById("floating-preview").style.animationDuration = ".3s";
         }
 
         document.getElementById('floating-preview').innerHTML = message;
-    }
-
-//////////////////// Clear animations ////////////////////
-
-    function clearAnimations() {
-        $('#bounce').css('display', 'none');
-        $('#swing').css('display', 'none');
-        $('#squash').css('display', 'none');
-        $('#floating').css('display', 'none');
-        $('#shake').css('display', 'none');
     }
 
 });
