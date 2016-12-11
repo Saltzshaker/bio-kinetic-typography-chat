@@ -18,8 +18,8 @@ $("#range_label").hide();
 ----------------------------------------------------*/
 
 var smoothie = new SmoothieChart({
-  maxValue: .12,
-  minValue: 0,
+  // maxValue: .12,
+  // minValue: 0,
   grid: {
     strokeStyle: 'rgb(125, 125, 125)',
     fillStyle: 'rgb(60, 60, 60)',
@@ -145,7 +145,6 @@ function plotGSRData() {
         }
 
         if (eda < modifiedAvg && gsr_index > numBaselineValues) {
-            console.log("why");
             inf = "low"
             // change data range label
             $("#range_label").show();

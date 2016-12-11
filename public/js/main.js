@@ -73,8 +73,9 @@ $(function() {
         var sentLi = msg["li_id"];
         var sentSpeed = msg["speed"];
         var sentEffect = msg["effect"];
+        var sentName = msg['username'] + ": ";
         var myMessage = $('#messages');
-        myMessage.append($('<li>').attr("id", sentLi).attr("class", sentShare + "-sharing").data("sharing", sentShare).text(sentTxt));
+        myMessage.append($('<li>').attr("id", sentLi).attr("class", sentShare + "-sharing").data("sharing", sentShare).text(sentName + sentTxt));
         myMessage.scrollTop(myMessage.prop('scrollHeight'));
 
         if (sentEffect == null && sentShare) {
@@ -100,7 +101,8 @@ $(function() {
       "sharingOn": sharingOn,
       "li_id": "li" + a,
       "speed": getAnimationSpeed(),
-      "effect": effect
+      "effect": effect,
+      "username": document.getElementById('usernameInput').value
       }
       // a++;
       return msg;

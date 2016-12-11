@@ -20,7 +20,7 @@ io.on('connection', function(socket) {
     console.log('a user connected');
 
     socket.on('chat message', function(msg) {
-        // msg['username'] = socket.username;
+        msg['username'] = socket.username;
         console.log(msg);
         console.log("sending?");
         io.emit('send to p2', msg);
