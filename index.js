@@ -25,11 +25,11 @@ io.on('connection', function(socket) {
         console.log("sending?");
         io.emit('send to p2', msg);
 
-
     });
 
     socket.on('add user', function(name) {
         socket.username = name;
+        console.log(name);
     });
 
     socket.on('disconnect', () => console.log('a user disconnected'));

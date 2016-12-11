@@ -86,12 +86,14 @@ function getBaselineAvg() {
       total += eda;
       avg = total/(numBaselineValues - 2);
       if (i == numBaselineValues - 1) {
-        // console.log ("baseline avg: " + avg);
+        console.log ("baseline avg: " + avg);
         return avg;
       }
     }
   });
 }
+
+console.log("avg out of loop " + getBaselineAvg());
 
 /*-----------
 plotGSRData
@@ -106,32 +108,47 @@ function plotGSRData() {
         eda = gsrarr[gsr_index];
         edaBaseline = gsrarr[gsr_index];
         gsr_index++;
+        console.log("eda: " + eda);
+        var modifiedAvg = avg - (avg/2);
 
-        $("#calculating_baseline").show();
-        $("#baseline_calculated").hide();
-
-        // baseline
-        line2.append(new Date().getTime(), edaBaseline);
-        // console.log ("edaBaseline: " + edaBaseline);
-
-        if (gsr_index > numBaselineValues) {
-            edaBaseline = avg;
-            // console.log ("edaBaseline set to avg? " + avg);
-            $("#calculating_baseline").hide();
-            $("#baseline_calculated").show();
-            line1.append(new Date().getTime(), eda);
+        if (eda == undefined) {
+          $("#no_data").show();
+          $("#calculating_baseline").hide();
+          $("#baseline_calculated").hide();
+          $('#low_range').hide();
+          $('#high_range').hide();
         }
 
-        if (eda > 0.097 && gsr_index > numBaselineValues)  {
+        else if (gsr_index > 0 && gsr_index < numBaselineValues && eda != undefined) {
+          $("#calculating_baseline").show();
+          $("#baseline_calculated").hide();
+          $("#no_data").hide();
+          $("#range_label").hide();
+        }
+
+        else if (gsr_index > numBaselineValues && eda != undefined) {
+            $("#calculating_baseline").hide();
+            $("#no_data").hide();
+            $("#baseline_calculated").show();
+            line1.append(new Date().getTime(), eda);
+            edaBaseline = modifiedAvg;
+            line2.append(new Date().getTime(), edaBaseline);
+        }
+
+        if (gsr_index > numBaselineValues && eda > modifiedAvg)  {
+            console.log("in high " + modifiedAvg);
             inf = "high";
             // change data range label
             $("#range_label").show();
             $("#high_range").show();
             $('#low_range').hide();
-        } else if (gsr_index > numBaselineValues) {
-            // refactor so low influence maps to slow animation in main.js
+        }
+
+        if (eda < modifiedAvg && gsr_index > numBaselineValues) {
+            console.log("why");
             inf = "low"
             // change data range label
+            $("#range_label").show();
             $("#low_range").show();
             $('#high_range').hide();
         }
