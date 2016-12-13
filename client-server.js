@@ -1,6 +1,6 @@
 // server
 
-var socket_remote = require("socket.io-client")("https://biofeedback-kt.herokuapp.com");
+var socket = require("socket.io-client")("https://biofeedback-kt.herokuapp.com");
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -16,7 +16,7 @@ http.listen(process.env.PORT || 3000, function() {
     console.log('listening on *:3000');
 });
 
-io.on('connection', function(socket) {
+socket.on('connect', function() {
 
     console.log('a user connected');
 
@@ -24,7 +24,7 @@ io.on('connection', function(socket) {
         msg['username'] = socket.username;
         console.log(msg);
         console.log("sending?");
-        socket_remote.emit('send to p2', msg);
+        io.emit('send to p2', msg);
 
     });
 
