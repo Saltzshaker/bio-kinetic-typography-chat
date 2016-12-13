@@ -1,6 +1,5 @@
 // connect to socket
-// var socket = io.connect();
-var socket = require("socket.io-client")("https://biofeedback-kt.herokuapp.com");
+var socket = io.connect();
 // chat message input
 var input;
 // increment a to get chat message li index
