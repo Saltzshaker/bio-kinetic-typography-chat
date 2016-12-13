@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var socket_remote = require('socket.io-client')('https://biofeedback-kt.herokuapp.com');
+var socket_remote = require('socket.io-client')('https://kt-eda.herokuapp.com');
 
 app.use(express.static(__dirname + '/public'));
 app.use('/scripts', express.static(__dirname + '/node_modules/smoothie/'));
