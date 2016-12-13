@@ -102,7 +102,6 @@ $(function() {
       "speed": getAnimationSpeed(),
       "effect": effect
       }
-      a++;
       return msg;
   }
 
