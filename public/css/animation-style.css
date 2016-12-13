@@ -16,11 +16,12 @@
     font-family: 'Work Sans', sans-serif;
     display: none;
     overflow: hidden;
+    animation-fill-mode: backwards;
 }
 
 @-webkit-keyframes bounce {
     0% {
-        -webkit-transform: translateY(-80px);
+        -webkit-transform: translateY(-20px);
         letter-spacing: -0.012em;
     }
 }
@@ -37,6 +38,7 @@
   font-family: 'Work Sans', sans-serif;
   display: none;
   overflow: hidden;
+  animation-fill-mode: backwards;
 }
 
 @keyframes swing {
@@ -62,16 +64,16 @@
     -webkit-transform-style: preserve-3d;
     -webkit-transition-property: transform;
     -webkit-transition-duration: 0.5s;
-    -webkit-transform: translateZ(30px) rotateX(90deg);
     font-size: 2em;
     font-family: 'Work Sans', sans-serif;
     display: none;
     overflow: hidden;
+    animation-fill-mode: backwards;
 }
 
 @-webkit-keyframes squash {
     0% {
-        -webkit-transform: rotateY(0deg);
+        -webkit-transform: rotateX(60deg);
         -webkit-perspective: 5000;
     }
 }
@@ -88,6 +90,7 @@
     font-size: 2em;
     display: none;
     overflow: hidden;
+    animation-fill-mode: backwards;
 }
 
 #drift, #drift-preview, .drift-li {
@@ -99,6 +102,7 @@
     font-family: 'Work Sans', sans-serif;
     display: none;
     overflow: hidden;
+    animation-fill-mode: backwards;
 }
 
 @-webkit-keyframes floating {
@@ -106,32 +110,14 @@
     -webkit-transform: translate(0, 0px);
   }
   50% {
-    -webkit-transform: translate(-15px, 25px);
+    -webkit-transform: translate(-10px, 10px);
   }
   75% {
-    -webkit-transform: translate(15px, -45px);
+    -webkit-transform: translate(10px, -10px);
   }
   to {
     -webkit-transform: translate(0, 0px);
   }
-}
-
-@-webkit-keyframes drift {
-    0% {
-        -webkit-transform: rotate(0deg);
-    }
-    20% {
-        -webkit-transform: rotate(-20deg);
-    }
-    60% {
-        -webkit-transform: rotate(5deg);
-    }
-    80% {
-        -webkit-transform: rotate(10deg);
-    }
-    100% {
-        -webkit-transform: rotate(0deg);
-    }
 }
 
 #shake, #shake-preview, .shake-li {
@@ -143,6 +129,7 @@
     font-family: 'Work Sans', sans-serif;
     display: none;
     overflow: hidden;
+    animation-fill-mode: backwards;
 }
 
 #shake, #bounce, #floating, #squash, #swing {
