@@ -16,7 +16,7 @@ http.listen(process.env.PORT || 3000, function() {
     console.log('listening on *:3000');
 });
 
-socket.on('connect', function() {
+io.on('connection', function(socket) {
 
     console.log('a user connected');
 
