@@ -16,6 +16,6 @@ io.on('connection', function(socket) {
     socket.on('send to server', function(msg) {
         console.log(msg);
         console.log('server received the msg');
-        io.sockets.emit('send to client', msg);
+        io.emit('send to client', msg);
     });
 });
