@@ -133,7 +133,7 @@
 }
 
 #shake, #bounce, #floating, #squash, #swing {
-  margin-top: 20%;
+  margin-top: 5%;
 }
 
 @-webkit-keyframes shake {

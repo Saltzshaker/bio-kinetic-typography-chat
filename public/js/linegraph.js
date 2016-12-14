@@ -28,7 +28,8 @@ var smoothie = new SmoothieChart({
     verticalSections: 6,
   },
   labels: {
-    fillStyle: 'rgb(255, 255, 255)'
+    fillStyle: 'rgb(255, 255, 255)',
+    precision: 5,
   },
   // timestampFormatter:SmoothieChart.timeFormatter
 });
@@ -110,6 +111,10 @@ function plotGSRData() {
         gsr_index++;
         console.log("eda: " + eda);
         var modifiedAvg = avg - (avg/2);
+
+        console.log("last baseline" + gsrarr[numBaselineValues]);
+        console.log("last?" + gsrarr[gsrarr.length-2]);
+        var lastEda = gsrarr[gsrarr.length-2];
 
         if (eda == undefined) {
           $("#no_data").show();
