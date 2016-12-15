@@ -5,7 +5,7 @@ var inf;
 // start at index 2 to skip the first lines of gsr text file, which don't contain values
 var gsr_index = 2;
 var edaBaseline;
-var numBaselineValues = 10;
+var numBaselineValues = 120;
 
 
 // Hide the EDA range status until data comes in
