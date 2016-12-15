@@ -5,7 +5,7 @@ var inf;
 // start at index 2 to skip the first lines of gsr text file, which don't contain values
 var gsr_index = 2;
 var edaBaseline;
-var numBaselineValues = 120;
+var numBaselineValues = 20;
 
 
 // Hide the EDA range status until data comes in
@@ -109,11 +109,7 @@ function plotGSRData() {
         eda = gsrarr[gsr_index];
         edaBaseline = gsrarr[gsr_index];
         gsr_index++;
-        console.log("eda: " + eda);
         var modifiedAvg = avg - (avg/2);
-
-        console.log("last baseline" + gsrarr[numBaselineValues]);
-        console.log("last?" + gsrarr[gsrarr.length-2]);
         var lastEda = gsrarr[gsrarr.length-2];
 
         if (eda == undefined) {
@@ -135,13 +131,14 @@ function plotGSRData() {
             $("#calculating_baseline").hide();
             $("#no_data").hide();
             $("#baseline_calculated").show();
-            line1.append(new Date().getTime(), eda);
+            line1.append(new Date().getTime(), lastEda);
+            console.log("what's plotting in calculated " + lastEda);
             edaBaseline = modifiedAvg;
             line2.append(new Date().getTime(), edaBaseline);
         }
 
-        if (gsr_index > numBaselineValues && eda > modifiedAvg)  {
-            console.log("in high " + modifiedAvg);
+        if (gsr_index > numBaselineValues && lastEda > modifiedAvg)  {
+            console.log("high eda " + lastEda + " vs avg " + modifiedAvg);
             inf = "high";
             // change data range label
             $("#range_label").show();
@@ -149,7 +146,8 @@ function plotGSRData() {
             $('#low_range').hide();
         }
 
-        if (eda < modifiedAvg && gsr_index > numBaselineValues) {
+        if (lastEda < modifiedAvg && gsr_index > numBaselineValues) {
+            console.log("low eda " + lastEda + " vs avg " + modifiedAvg);
             inf = "low"
             // change data range label
             $("#range_label").show();
