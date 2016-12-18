@@ -1,4 +1,4 @@
-# Physiological Kinetic Typography Chat
+# Kinetic Typography Chat with Empatica E4
 
 This is an instant messenger which operates between multiple two computers, each pointing to localhost:3000 and using the Heroku app at https://kt-eda.herokuapp.com/ as a server. After setting a username, the user will see their messages on the right side and an animation preview and a streaming biofeedback chart on the left side.
 
@@ -10,6 +10,7 @@ If the user's current EDA value is above their baseline, the animation will play
 ## Effect Library
 The user can click "Choose Effect" to change the style of their animation to one of five animations: bounce, swing, squash, floating, and shake. The "Choose Effect" button opens a window previewing each animation with the current typed text, highlighting the effect currently selected. If the user clicks on another effect, the effect library modal will close and the Animation preview will update to animate the text with the new effect. Though the effect will change, the speed of each effect is still determined by whether the user is above or below their baseline.
 
+## Effect Sharing
 By default, each user shares their effect with the other user. They can click or unclick the "Sharing" checkbox throughout the chat to share their message either with an effect (Sharing checked) or as plain text (Sharing unchecked). After sending a message with sharing on, both chat users will see the animation play once and then stop. Either user can hover over the message in the chat history to replay the effect. Messages are assigned a numerical ID and sent through the chat with speed, effect, and sharing properties.
 
 ## Smoothie chart
