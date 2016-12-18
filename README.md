@@ -21,6 +21,7 @@ If the user's current EDA value is above their baseline, a label will read "Abov
 # Instructions for Testing:
 
 To test on one computer:
+
 1. cd bio-kinetic-typography-chat
 2. Make sure there are several hundred lines of test data in the gsrData.txt file
 3. node local-server.js
@@ -28,6 +29,7 @@ To test on one computer:
 5. Open another browser with the same url to communicate between two browsers
 
 To test on two computers:
+
 1. Make sure bio-kinetic-typography-chat repo is synced on each computers
 On each computer:
 2. Make sure there are several hundred lines of test data in the gsrData.txt file in each repo
@@ -38,6 +40,7 @@ On each computer:
 # Instructions for Running on Two Computers with the Empatica E4
 
 On each computer:
+
 1. In each computer's text folder, delete all the data in gsrData.txt and leave blank.
 2. Connect each computer to an Android phone via a USB charging cable.
 3. Open the EmpApp project in Android Studio.
