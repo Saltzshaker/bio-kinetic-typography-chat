@@ -4,6 +4,7 @@ var socket = io.connect();
 var input;
 // increment a to get chat message li index
 var a = 0;
+// set shake as default effect
 var effect = "shake";
 var sharingOn = true;
 var currentEffect;
@@ -15,40 +16,14 @@ $(function() {
                                   Function calls
     ------------------------------------------------------------------------------*/
 
-    /*----------
-    Animate main div and preview text as a user types with animatePreview() and conditionals based on effect
-    ----------*/
+    // Animate main div and preview text as a user types with animatePreview() and conditionals based on effect
     liveAnimate();
 
     /*------------------------------------------------------------------------------
                                       Socket
     ------------------------------------------------------------------------------*/
 
-
-    /*----------
-    On chat message, append unique li with index and add current effect to play once
-    ----------*/
-  function addOnMsg() {
-        var myMessage = $('#messages');
-        myMessage.append($('<li>').attr("id", "li" + a).attr("class", sharingOn + "-sharing").data("sharing", sharingOn).text(msg));
-        myMessage.scrollTop(myMessage.prop('scrollHeight'));
-
-        if (effect == null && sharingOn) {
-            $('#li' + a).css('-webkit-animation-iteration-count', "1");
-            $('#li' + a).append($('<span>').attr("class", "glyphicon glyphicon-ok-sign"));
-            getAnimationSpeed();
-        } else if (sharingOn) {
-            $('#li' + a).addClass(effect + "-li").css('display', 'block');
-            $('#li' + a).css('-webkit-animation-iteration-count', "1");
-            $('#li' + a).append($('<span>').attr("class", "glyphicon glyphicon-ok-sign"));
-            getAnimationSpeed();
-        }
-        a++;
-    }
-
-    /*----------
-    Sets the client's username and emit to other user
-    ----------*/
+    // Sets the client's username and emit to other user
     function setUsername() {
         var name = document.getElementById('usernameInput').value;
         socket.emit('add user', name);
@@ -56,12 +31,13 @@ $(function() {
         document.getElementById("c").style.display = "-webkit-flex";
     }
 
-    /*----------
-    When chat form is submitted, add the message and emit to other user
-    ----------*/
+
+    // When chat form is submitted, add the message and emit to other user
     $('form').submit(function() {
         var sendMsg = createMsg();
         socket.emit('chat message', sendMsg);
+        // clear input after send
+        $('#m').val('');
         return false;
     });
 
@@ -94,66 +70,50 @@ $(function() {
         a++;
     });
 
-    function createMsg () {
-    // get json of li effect class, id, speed, sharing, text
-      var msg = {
-      "txt": $('#m').val(),
-      "sharingOn": sharingOn,
-      "li_id": "li" + a,
-      "speed": getAnimationSpeed(),
-      "effect": effect,
-      "username": document.getElementById('usernameInput').value
-      }
-      return msg;
-  }
+    function createMsg() {
+        // get json of li effect class, id, speed, sharing, text
+        var msg = {
+            "txt": $('#m').val(),
+            "sharingOn": sharingOn,
+            "li_id": "li" + a,
+            "speed": getAnimationSpeed(),
+            "effect": effect,
+            "username": document.getElementById('usernameInput').value
+        }
+        return msg;
+    }
 
 
     /*------------------------------------------------------------------------------
                                 jQuery event handlers
     ------------------------------------------------------------------------------*/
 
-    /*----------
-    Checkbox
-    ----------*/
+    /*-----Username screen-----*/
+
+    // On username submit click, set username
+    $("button[name='submit']").click(setUsername);
+
+    /*-----Biofeedback sharing and animation preview)-----*/
+
+    // Sharing checkbox
     $('#share-data').click(function() {
-        if($(this).is(':checked')) {
+        if ($(this).is(':checked')) {
             sharingOn = true;
-        }
-        else {
+        } else {
             sharingOn = false;
         }
     });
 
-    /*----------
-    Mousing over and out chat messages
-    ----------*/
-    $(document.body).on('mouseover', '#messages li', function(evt) {
-        $(this).css('-webkit-animation-iteration-count', "infinite");
-    });
-
-    $(document.body).on('mouseout', '#messages li', function(evt) {
-        $(this).css('-webkit-animation-iteration-count', "0");
-        console.log("mouseout");
-    });
-
-    /*----------
-    On submit click, set username
-    ----------*/
-    $("button[name='submit']").click(setUsername);
-
-    /*----------
-    Add border to current effect selected in effect library
-    ----------*/
-
+    /*-----Choose effect library-----*/
+    // Add border to current effect selected in effect library
     $("#effect-btn").click(function() {
-      currentEffect = effect + "-preview";
-      $("#" + currentEffect).addClass("selected-effect-border");
-      console.log(currentEffect);
+        currentEffect = effect + "-preview";
+        $("#" + currentEffect).addClass("selected-effect-border");
+        console.log(currentEffect);
     });
 
-    /*----------
-    On click in effect library, close modal and set new animation effect in main div
-    ----------*/
+
+    // On click in effect library, close modal and set new animation effect in main div
     $("#floating-preview").click(function() {
         $("#" + currentEffect).removeClass("selected-effect-border");
         effect = "floating";
@@ -194,11 +154,23 @@ $(function() {
         animateSquash(removeName(input));
     });
 
+    /*-----Chat-----*/
+
+    // Play animation on mouse hover
+    $(document.body).on('mouseover', '#messages li', function(evt) {
+        $(this).css('-webkit-animation-iteration-count', "infinite");
+    });
+
+    $(document.body).on('mouseout', '#messages li', function(evt) {
+        $(this).css('-webkit-animation-iteration-count', "0");
+        console.log("mouseout");
+    });
+
     /*------------------------------------------------------------------------------
                                 JS METHODS
     ------------------------------------------------------------------------------*/
     function getAnimationSpeed() {
-      var speed;
+        var speed;
 
         if (effect == 'bounce') {
             if (inf == 'low') {
@@ -210,16 +182,16 @@ $(function() {
 
         if (effect == 'swing') {
             if (inf == 'low') {
-              speed = '1s';
+                speed = '1s';
             } else {
-              speed = '.3s';
+                speed = '.3s';
             }
         }
         if (effect == 'squash') {
             if (inf == 'low') {
-              speed = '3s';
+                speed = '3s';
             } else {
-              speed = '1s';
+                speed = '1s';
             }
         }
 
@@ -242,17 +214,13 @@ $(function() {
         return speed;
     }
 
-    /*----------
-    Remove the username from the chat message
-    ----------*/
+    // Remove the username from the chat message
     function removeName(txt) {
         txt = txt.replace(/^.*?:/, "");
         return txt;
     }
 
-    /*----------
-    Clear animations
-    ----------*/
+    //  Clear animations
     function clearAnimations() {
         $('#bounce').css('display', 'none');
         $('#swing').css('display', 'none');
@@ -261,9 +229,9 @@ $(function() {
         $('#shake').css('display', 'none');
     }
 
-    /*----------
-    Apply all preview animations to effect library
-    ----------*/
+
+    // Apply all preview animations to effect library
+
     function animatePreview(message) {
         shakePreview(message);
         bouncePreview(message);
@@ -272,9 +240,8 @@ $(function() {
         floatingPreview(message);
     }
 
-    /*----------
-    Add text animations to box as the user types
-    ----------*/
+
+    // Add text animations to box as the user types
     function liveAnimate() {
         $('#m').keyup(function() {
             // the input being typed by the user
@@ -300,9 +267,8 @@ $(function() {
         });
     }
 
-    /*----------
-    Display animation CSS in main div for all effects
-    ----------*/
+
+    // Display animation CSS in main div for all effects
 
     // bounces up and down
     function animateBounce(message) {
