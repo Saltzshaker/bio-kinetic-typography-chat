@@ -1,6 +1,6 @@
 # Kinetic Typography Chat with Empatica E4
 
-This is an instant messenger which operates between multiple two computers, each pointing to localhost:3000 and using the Heroku app at https://kt-eda.herokuapp.com/ as a server. After setting a username, the user will see their messages on the right side and an animation preview and a streaming biofeedback chart on the left side.
+This is an instant messenger which operates between two computers, each pointing to localhost:3000 and using the Heroku app at https://kt-eda.herokuapp.com/ as a server. Each chat user is connected to the Empatica E4 wristband, sensing their Electrodermal Activity (EDA), also known as Galvanic Skin Response (GSR). After setting a username, the user will see their messages on the right side and an animation preview and a streaming biofeedback chart on the left side.
 
 ## Animation Preview
 As the user types, they will see their text animated in the "Animation Preview" div. The speed of the animation will be in either a high or low state, depending on their biofeedback.
