@@ -31,7 +31,9 @@ To test on one computer:
 To test on two computers:
 
 1. Make sure bio-kinetic-typography-chat repo is synced on each computers
+
 On each computer:
+
 2. Make sure there are several hundred lines of test data in the gsrData.txt file in each repo
 3. cd bio-kinetic-typography-chat
 4. node local-server.js
