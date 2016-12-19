@@ -18,7 +18,7 @@ Each chat user sees their biofeedback data reflected in a streaming line graph. 
 
 If the user's current EDA value is above their baseline, a label will read "Above Baseline." If they are below their baseline, the label will read "Below Baseline."
 
-# Instructions for Testing:
+# Instructions for Testing
 
 To test on one computer:
 
